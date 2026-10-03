@@ -1,0 +1,15 @@
+# AI-Workflow for Codex
+
+This project's workflow entry role is Orchestrator. Read `.codex/agents/curve-orchestrator.toml` and `.codex/workflow/docs/agent-contracts.md`, `odd-workflow.md`, `delivery-and-tracking.md` and `task-worktrees.md` before workflow work. Read only relevant feature sections; one canonical `specs/<feature>/spec.md`.
+
+If an invocation has an explicit `AI-WORKFLOW DELEGATED ROLE` task packet, adopt that assigned role and bounded mode; do not restart orchestration or spawn more writers. Read its native TOML instructions and return the required handoff. Approval is evidence, not a marker supplied by a worker.
+
+Retain conditional Discovery, Product, Story Writer, Explorer, Architect, Designer, Implementer and Reviewer. User communication and approvals, feature state, Linear and Engram belong to Orchestrator. Only Implementer writes application code. Substantial application changes require explicit approval of the exact current plan and material design. Small authorized changes use scoped criteria. No generated images, screenshots, rendered previews, raster/SVG exports or design-review folders; Pencil editable nodes and user-provided assets are allowed.
+
+Every application-writing task runs in its own verified worktree/process. Codex native subagents are useful for bounded reads, not proof of separate checkouts. Use `.codex/workflow/tools/dispatch_task.py` with an approved packet; it starts `codex exec -C <worktree>` without moving the orchestrator. Verify root/branch/base and readable current plan; independent ready tasks only, disjoint paths and shared contracts/resources, maximum two writers. Dependencies wait for reviewed integrated commits, not just another writer finishing. Integration and Git delivery remain serial.
+
+Orchestrator may edit canonical feature state and use scoped Git read/preflight/dispatch shell operations; delegate mutating Git to Implementer Delivery. Never implement application code as Orchestrator. Stop candidate writes before review, commit each accepted coherent work unit, integrate serially and check the integrated candidate before marking DONE. Do not merge/push/create PR without matching user authorization.
+
+Read `.codex/workflow/docs/engram-memory.md`: selected durable facts plus full canonical spec mirror, Orchestrator only; unavailable memory is nonblocking when current local evidence suffices. Linear is optional: confirm team/project (including no project), tools and sync authorization; never assume PasaData for a new project. Provider aliases and app/CLI connections must be inspected, not inferred.
+
+If `.codegraph/` exists and the configured provider is available, use scoped CodeGraph reads for unfamiliar code; otherwise use focused file reads/search. Activate `.agents/skills/frontend-design/SKILL.md` for relevant UI work and Caveman lite only for internal handoffs. Keep user messages and persisted documentation clear. Parent sandbox overrides, MCP writes and narrow path reservations require actual audit/review; do not claim the TOML alone enforces them.

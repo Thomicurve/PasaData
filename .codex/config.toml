@@ -1,0 +1,34 @@
+# Merge into project configuration; requires a trusted project.
+# Model and approval policy inherit the user's configuration.
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 2
+
+[mcp_servers.github]
+url = "https://api.githubcopilot.com/mcp/"
+bearer_token_env_var = "GITHUB_MCP_TOKEN"
+enabled = false
+# enabled_tools = ["EXACT_OBSERVED_SERVER_TOOL_NAMES"]
+
+[mcp_servers.linear]
+url = "https://mcp.linear.app/mcp"
+enabled = false
+# Authenticate using the actual Codex MCP login flow supported by this server.
+# Bind only Orchestrator's reviewed capabilities and choose team/project explicitly.
+
+[mcp_servers.pencil]
+command = "REPLACE_WITH_INSTALLED_PENCIL_MCP_EXECUTABLE"
+args = ["--app", "desktop"]
+enabled = false
+# Designer only: inspected text docs/native editable nodes. No captures/images/exports.
+
+[mcp_servers.engram]
+command = "engram"
+args = ["mcp"]
+enabled = false
+# Verify installed binary/transport and exact tools; Orchestrator only.
+
+[mcp_servers.codegraph]
+command = "codegraph"
+args = ["serve", "--mcp"]
+enabled = false

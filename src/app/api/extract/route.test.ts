@@ -7,17 +7,25 @@ import { DOCUMENT_FIELDS } from "../../../lib/document-fields";
 
 const fields = Object.fromEntries(DOCUMENT_FIELDS.map((key) => [key, null]));
 const fetchMock = vi.fn();
+const httpMock = vi.fn();
 const jpeg = new Uint8Array([255, 216, 255, 224]);
 const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10]);
 function form(bytes: Uint8Array = jpeg, type = "image/jpeg") {
   const value = new FormData();
   value.append("image", new Blob([new Uint8Array(bytes).buffer], { type }), "synthetic");
   value.append("processingAcknowledged", "true");
+  value.append("turnstileToken", "synthetic-challenge");
   return value;
 }
-function request(value: FormData) { return new Request("http://localhost/api/extract", { method: "POST", body: value }); }
+function request(value: FormData) { return new Request("http://localhost/api/extract", { method: "POST", body: value, headers: { "x-vercel-forwarded-for": "203.0.113.4" } }); }
 beforeEach(() => {
-  vi.stubEnv("GEMINI_API_KEY", undefined); vi.stubEnv("GEMINI_TOKEN", "synthetic-key"); vi.stubGlobal("fetch", fetchMock);
+  vi.stubEnv("GEMINI_API_KEY", undefined); vi.stubEnv("GEMINI_TOKEN", "synthetic-key"); vi.stubGlobal("fetch", httpMock);
+  for (const [name, value] of Object.entries({ EXTRACTION_ENABLED: "true", VERCEL: "1", VERCEL_ENV: "production", TURNSTILE_SECRET_KEY: "synthetic", TURNSTILE_HOSTNAMES: "app.example.test", UPSTASH_REDIS_REST_URL: "https://synthetic.upstash.io", UPSTASH_REDIS_REST_TOKEN: "synthetic", EXTRACTION_NAMESPACE: "synthetic", EXTRACTION_IP_HMAC_SECRET: "s".repeat(32) })) vi.stubEnv(name, value);
+  httpMock.mockImplementation((url, init) => {
+    if (String(url).includes("cloudflare.com")) return Promise.resolve(Response.json({ success: true, hostname: "app.example.test", action: "extract" }));
+    if (String(url).includes("upstash.io")) return Promise.resolve(Response.json({ result: [1, 0] }));
+    return fetchMock(url, init);
+  });
   fetchMock.mockResolvedValue(Response.json({ candidates: [{ finishReason: "STOP", content: { parts: [{ text: JSON.stringify(fields) }] } }] }));
 });
 afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals(); vi.resetAllMocks(); });
@@ -96,4 +104,40 @@ describe("single-image extraction route", () => {
       code: "INVALID_EXTRACTION", message: "No se obtuvo una extracción válida. Probá con una fotografía más clara.",
     } });
   });
+});
+
+it.each(["missing", "duplicate", "file", "empty", "oversized"])("rejects invalid Turnstile multipart %s without Google", async (variant) => {
+  const value = form();
+  if (variant === "missing") value.delete("turnstileToken");
+  if (variant === "duplicate") value.append("turnstileToken", "synthetic");
+  if (variant === "file") value.set("turnstileToken", new Blob(["synthetic"]));
+  if (variant === "empty") value.set("turnstileToken", "");
+  if (variant === "oversized") value.set("turnstileToken", "x".repeat(2049));
+  const response = await POST(request(value));
+  expect(response.status).toBe(400); expect(fetchMock).not.toHaveBeenCalled(); expect(httpMock).not.toHaveBeenCalled();
+});
+it.each([
+  ["disabled", 503, "EXTRACTION_DISABLED"], ["bot", 400, "BOT_VERIFICATION"],
+  ["ip", 429, "RATE_LIMITED"], ["daily", 429, "DAILY_LIMIT"], ["store", 503, "PROTECTION_UNAVAILABLE"],
+])("never calls Google after %s protection failure", async (variant, status, code) => {
+  if (variant === "disabled") vi.stubEnv("EXTRACTION_ENABLED", "false");
+  if (variant === "bot") httpMock.mockResolvedValueOnce(Response.json({ success: false }));
+  if (["ip", "daily", "store"].includes(String(variant))) {
+    httpMock.mockResolvedValueOnce(Response.json({ success: true, hostname: "app.example.test", action: "extract" }));
+    httpMock.mockResolvedValueOnce(Response.json({ result: variant === "ip" ? [2, 45] : variant === "daily" ? [3, 120] : [4, 0] }));
+  }
+  const response = await POST(request(form()));
+  expect(response.status).toBe(status); expect(await response.json()).toMatchObject({ error: { code } });
+  expect(response.headers.get("cache-control")).toBe("no-store");
+  expect(response.headers.get("retry-after")).toBe(variant === "ip" ? "45" : variant === "daily" ? "120" : null);
+  expect(fetchMock).not.toHaveBeenCalled();
+});
+it("does not refund or retry reservation after Google failure", async () => {
+  fetchMock.mockRejectedValueOnce(new Error("private"));
+  const response = await POST(request(form()));
+  expect(response.status).toBe(502); expect(fetchMock).toHaveBeenCalledTimes(1);
+  expect(httpMock.mock.calls.map(([url]) => String(url))).toEqual([
+    "https://challenges.cloudflare.com/turnstile/v0/siteverify", "https://synthetic.upstash.io",
+    expect.stringContaining("generativelanguage.googleapis.com"),
+  ]);
 });

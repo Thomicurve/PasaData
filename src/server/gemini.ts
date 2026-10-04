@@ -15,6 +15,11 @@ const envelopeSchema = z.object({
   })).optional(),
 });
 const errors = {
+  EXTRACTION_DISABLED: [503, "La extracción está suspendida. Intentá más tarde."],
+  BOT_VERIFICATION: [400, "Completá nuevamente la verificación antes de procesar."],
+  RATE_LIMITED: [429, "Esperá un minuto antes de volver a procesar."],
+  DAILY_LIMIT: [429, "Se alcanzó el límite diario de extracciones. Intentá mañana."],
+  PROTECTION_UNAVAILABLE: [503, "La protección de extracción no está disponible. Intentá más tarde."],
   CONFIGURATION: [503, "La extracción no está configurada. Contactá al responsable de la aplicación."],
   INVALID_IMAGE: [400, "Seleccioná una única imagen JPEG o PNG válida de hasta 3 MB."],
   INVALID_REQUEST: [400, "Revisá la imagen y confirmá el aviso de procesamiento antes de enviar."],
@@ -25,7 +30,7 @@ const errors = {
 } as const;
 export class ExtractionError extends Error {
   readonly status: number;
-  constructor(readonly code: keyof typeof errors) {
+  constructor(readonly code: keyof typeof errors, readonly retryAfter?: number) {
     super(errors[code][1]); this.status = errors[code][0];
   }
 }

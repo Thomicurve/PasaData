@@ -1,0 +1,21 @@
+# AI-Workflow for Codex
+
+This project's workflow entry role is Orchestrator. Read `.codex/agents/curve-orchestrator.toml` and `.codex/workflow/docs/agent-contracts.md`, `odd-workflow.md`, `delivery-and-tracking.md` and `task-worktrees.md` before workflow work. Read only relevant feature sections; one canonical `specs/<feature>/spec.md`.
+
+If an invocation has an explicit `AI-WORKFLOW DELEGATED ROLE` task packet, adopt that assigned role and bounded mode; do not restart orchestration or spawn more writers. Read its native TOML instructions and return the required handoff. Approval is evidence, not a marker supplied by a worker.
+
+Retain conditional Discovery, Product, Story Writer, Explorer, Architect, Designer, Implementer and Reviewer. User communication and approvals, feature state, Linear and Engram belong to Orchestrator. Only Implementer writes application code. Substantial application changes require explicit approval of the exact current plan and material design. Small authorized changes use scoped criteria. No generated images, screenshots, rendered previews, raster/SVG exports or design-review folders; Pencil editable nodes and user-provided assets are allowed.
+
+## Execution policy: current checkout, sequential tasks
+
+All application implementation, verification, review and local Git delivery use the current project checkout and its selected feature branch. Do not create or require task worktrees, task branches, checkout relocation or a separate-worktree launcher. Only one application task and one writer may be active at a time. Delegate bounded Implementation, Verification-only and Delivery modes to Implementer using the available native role/subagent mechanism; Orchestrator remains responsible for coordination and never writes application code.
+
+This project policy, explicitly confirmed by the user on 2026-10-03, overrides the superseded isolation, parallel-writer, dispatcher and task-worktree integration requirements in `.codex/agents/*.toml`, `.codex/workflow/docs/*.md` and `.codex/workflow/tools/dispatch_task.py`. Read those files for their remaining role, approval, scope, privacy, checking and delivery contracts. The legacy dispatcher requires a separate root and must not be used for current-checkout tasks. No runtime isolation is claimed from a role prompt or TOML.
+
+Before delegation verify the actual checkout root, branch, HEAD, current plan/design approval, assigned paths and absence of another writer. Preserve existing unrelated and secret files. Stop candidate writes before independent review and checking; commit each accepted coherent work unit locally through Implementer Delivery. Dependencies wait for accepted reviewed commits in the same feature branch. No cherry-pick or separate task integration is required. Present the completed task and obtain an explicit continuation decision for the next named task; silence and previous blanket plan approval do not start subsequent tasks.
+
+Orchestrator may edit canonical feature state and authorized workflow instructions, and use scoped Git read/preflight operations; delegate mutating Git to Implementer Delivery. Never implement application code as Orchestrator. Mark a task DONE only after independent review, required checks and its verified local work-unit commit in the feature branch. Do not merge/push/create PR without matching user authorization.
+
+Read `.codex/workflow/docs/engram-memory.md`: selected durable facts plus full canonical spec mirror, Orchestrator only; unavailable memory is nonblocking when current local evidence suffices. Linear is optional: confirm team/project (including no project), tools and sync authorization; never assume PasaData for a new project. Provider aliases and app/CLI connections must be inspected, not inferred.
+
+If `.codegraph/` exists and the configured provider is available, use scoped CodeGraph reads for unfamiliar code; otherwise use focused file reads/search. Activate `.agents/skills/frontend-design/SKILL.md` for relevant UI work and Caveman lite only for internal handoffs. Keep user messages and persisted documentation clear. Parent sandbox overrides, MCP writes and narrow path reservations require actual audit/review; do not claim the TOML alone enforces them.

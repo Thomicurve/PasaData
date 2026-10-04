@@ -1,0 +1,3771 @@
+{
+  "version": "2.20",
+  "children": [
+    {
+      "type": "frame",
+      "id": "bi8Au",
+      "x": 0,
+      "y": 0,
+      "name": "Component Library",
+      "clip": true,
+      "width": 1440,
+      "height": 520,
+      "fill": "$canvas",
+      "layout": "vertical",
+      "gap": 28,
+      "padding": [
+        40,
+        56
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "yIXHG",
+          "name": "Library Title",
+          "fill": "$ink",
+          "content": "PasaData · sistema de interfaz",
+          "fontFamily": "$font-title",
+          "fontSize": 30,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "A8IPl",
+          "name": "Library Description",
+          "fill": "$muted",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Papel legible, estados honestos y una ruta única desde la foto hasta Excel.",
+          "lineHeight": 1.45,
+          "fontFamily": "$font-ui",
+          "fontSize": 15,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "KtxaX",
+          "name": "Reusable Components",
+          "width": "fill_container",
+          "height": 100,
+          "gap": 40,
+          "padding": 2,
+          "children": [
+            {
+              "type": "frame",
+              "id": "Z48uNY",
+              "name": "Button / Primary",
+              "reusable": true,
+              "height": 50,
+              "fill": "$accent",
+              "cornerRadius": 10,
+              "gap": 10,
+              "padding": [
+                14,
+                20
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "apYXb",
+                  "name": "Button Icon",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "arrow-right",
+                  "library": "lucide",
+                  "fill": "#FFFFFF"
+                },
+                {
+                  "type": "text",
+                  "id": "J5X8Lh",
+                  "name": "Button Label",
+                  "fill": "#FFFFFF",
+                  "content": "Continuar",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 15,
+                  "fontWeight": "650"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "OXwFC",
+              "name": "Button / Secondary",
+              "reusable": true,
+              "height": 50,
+              "fill": "$paper",
+              "cornerRadius": 10,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "gap": 10,
+              "padding": [
+                13,
+                20
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "u6Ddf8",
+                  "name": "Button Icon",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "refresh-cw",
+                  "library": "lucide",
+                  "fill": "$ink"
+                },
+                {
+                  "type": "text",
+                  "id": "N0vQpg",
+                  "name": "Button Label",
+                  "fill": "$ink",
+                  "content": "Reintentar",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 15,
+                  "fontWeight": "650"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "aYgSe",
+              "name": "Field / Text",
+              "reusable": true,
+              "width": 320,
+              "layout": "vertical",
+              "gap": 7,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "J0Hqq",
+                  "name": "Field Label",
+                  "fill": "$ink",
+                  "content": "Nombre",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 13,
+                  "fontWeight": "650"
+                },
+                {
+                  "type": "frame",
+                  "id": "xSqxG",
+                  "name": "Field Box",
+                  "width": "fill_container",
+                  "height": 48,
+                  "fill": "$paper",
+                  "cornerRadius": 8,
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "padding": [
+                    13,
+                    14
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "M25rN",
+                      "name": "Field Value",
+                      "fill": "$ink",
+                      "content": "Valor extraído",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "x2i9w",
+                  "x": 0,
+                  "y": 0,
+                  "name": "Field Helper",
+                  "enabled": false,
+                  "fill": "$warning",
+                  "textGrowth": "fixed-width",
+                  "width": 320,
+                  "content": "No se pudo leer. Revisá este campo.",
+                  "lineHeight": 1.35,
+                  "fontFamily": "$font-ui",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "kVIWS",
+              "name": "Status / Needs Review",
+              "reusable": true,
+              "fill": "$warning-soft",
+              "cornerRadius": 999,
+              "gap": 7,
+              "padding": [
+                7,
+                10
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "DddLg",
+                  "name": "Status Icon",
+                  "width": 15,
+                  "height": 15,
+                  "icon": "circle-alert",
+                  "library": "lucide",
+                  "fill": "$warning"
+                },
+                {
+                  "type": "text",
+                  "id": "hAG8U",
+                  "name": "Status Label",
+                  "fill": "$warning",
+                  "content": "Revisar",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 12,
+                  "fontWeight": "650"
+                }
+              ]
+            },
+            {
+              "id": "IEQDg",
+              "type": "ref",
+              "ref": "Z48uNY",
+              "name": "Button / Keyboard Focus",
+              "stroke": "#69B89F",
+              "strokeWidth": 3,
+              "descendants": {
+                "apYXb": {
+                  "icon": "keyboard"
+                },
+                "J5X8Lh": {
+                  "content": "Foco visible"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "uSs8d",
+          "name": "Accessibility Guidance",
+          "width": "fill_container",
+          "fill": "#F2F6F3",
+          "cornerRadius": 8,
+          "gap": 24,
+          "padding": [
+            14,
+            16
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "aeiol",
+              "name": "Accessibility Note 1",
+              "fill": "$ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Foco de teclado: contorno de 3 px con contraste visible.",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-ui",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "XuSQm",
+              "name": "Accessibility Note 2",
+              "fill": "$ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Campos: etiqueta persistente, estado por color + texto; nunca solo color.",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-ui",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "O5dXY",
+              "name": "Accessibility Note 3",
+              "fill": "$ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Procesamiento: mensaje de estado anunciable; acciones bloqueadas explican el motivo.",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-ui",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "kMwy4",
+      "x": 0,
+      "y": 600,
+      "name": "Desktop / 01 Carga vacía",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "fill": "$paper",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "vWtbn",
+          "name": "App Header",
+          "width": "fill_container",
+          "height": 72,
+          "stroke": "$line",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "padding": [
+            0,
+            64
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "qt3oJ",
+              "name": "Brand",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "tJAr4",
+                  "name": "Brand Mark",
+                  "width": 32,
+                  "height": 38,
+                  "fill": "$accent",
+                  "cornerRadius": 4,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    8,
+                    7
+                  ],
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "Xv8I4",
+                      "name": "Paper Line 1",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "OrC5b",
+                      "name": "Paper Line 2",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "gRfL0",
+                      "name": "Paper Line 3",
+                      "fill": "#FFFFFF",
+                      "width": 12,
+                      "height": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "a4JBO",
+                  "name": "Brand Name",
+                  "fill": "$ink",
+                  "content": "PasaData",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 19,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "CdPTk",
+              "name": "Privacy Note",
+              "fill": "$muted",
+              "content": "Sin cuentas · Sin historial",
+              "fontFamily": "$font-ui",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "CGu2j",
+          "name": "Main Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 34,
+          "padding": [
+            42,
+            96,
+            56,
+            96
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "RRgjq",
+              "name": "Workflow Steps",
+              "width": "fill_container",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "RZyWg",
+                  "name": "Step 1",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "hApz8",
+                      "name": "Step Marker 1",
+                      "fill": "$accent",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$accent",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "zLZen",
+                      "name": "Step Label 1",
+                      "fill": "$ink",
+                      "content": "Elegir imagen",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "lirWB",
+                      "name": "Step Connector 1",
+                      "fill": "$line",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "r4gmUV",
+                  "name": "Step 2",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "dVtRW",
+                      "name": "Step Marker 2",
+                      "fill": "$paper",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$line",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "OJn8W",
+                      "name": "Step Label 2",
+                      "fill": "$muted",
+                      "content": "Procesar",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "tlSfC",
+                      "name": "Step Connector 2",
+                      "fill": "$line",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "h2T1G",
+                  "name": "Step 3",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "gi7ja",
+                      "name": "Step Marker 3",
+                      "fill": "$paper",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$line",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "t5annZ",
+                      "name": "Step Label 3",
+                      "fill": "$muted",
+                      "content": "Revisar",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "u9qcfc",
+                      "name": "Step Connector 3",
+                      "fill": "$line",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "NFJEE",
+                  "name": "Step 4",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "JwAw2",
+                      "name": "Step Marker 4",
+                      "fill": "$paper",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$line",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "O55vO",
+                      "name": "Step Label 4",
+                      "fill": "$muted",
+                      "content": "Descargar Excel",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "p4CCxg",
+              "name": "Upload Layout",
+              "width": "fill_container",
+              "height": "fill_container",
+              "gap": 68,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "LnZ6u",
+                  "name": "Intro Copy",
+                  "width": 460,
+                  "layout": "vertical",
+                  "gap": 18,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "xHk7q",
+                      "name": "Kicker",
+                      "fill": "$accent",
+                      "content": "Una foto. Una planilla.",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ZpgNH",
+                      "name": "Page Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Pasá notas manuscritas a Excel.",
+                      "lineHeight": 1.12,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 42,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "text",
+                      "id": "JF1pJ",
+                      "name": "Page Description",
+                      "fill": "$muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Elegí una imagen clara de la entrevista. Vas a poder corregir cada dato antes de descargar el archivo.",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 17
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Pkwh6",
+                      "name": "Privacy Summary",
+                      "width": "fill_container",
+                      "fill": "$accent-soft",
+                      "cornerRadius": 8,
+                      "gap": 10,
+                      "padding": [
+                        12,
+                        14
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "j72ofR",
+                          "name": "Privacy Icon",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "shield-check",
+                          "library": "lucide",
+                          "fill": "$accent"
+                        },
+                        {
+                          "type": "text",
+                          "id": "jPP8G",
+                          "name": "Privacy Summary Text",
+                          "fill": "$ink",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "La app no guarda la imagen ni los datos.",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 14,
+                          "fontWeight": "550"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "NEkug",
+                  "name": "Upload Dropzone",
+                  "width": "fill_container",
+                  "height": 430,
+                  "fill": "#F2F6F3",
+                  "cornerRadius": 16,
+                  "stroke": "$accent",
+                  "strokeWidth": 2,
+                  "layout": "vertical",
+                  "gap": 18,
+                  "padding": [
+                    46,
+                    42
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "Fwm0W",
+                      "name": "Upload Icon",
+                      "width": 46,
+                      "height": 46,
+                      "icon": "image-up",
+                      "library": "lucide",
+                      "fill": "$accent"
+                    },
+                    {
+                      "type": "text",
+                      "id": "M2bSe",
+                      "name": "Upload Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": 520,
+                      "content": "Arrastrá una imagen o elegila desde tu equipo",
+                      "lineHeight": 1.3,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 22,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "text",
+                      "id": "fjKEc",
+                      "name": "Upload Hint",
+                      "fill": "$muted",
+                      "textGrowth": "fixed-width",
+                      "width": 480,
+                      "content": "Una sola imagen. Formatos y tamaño máximo por confirmar.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14
+                    },
+                    {
+                      "id": "B3IKx",
+                      "type": "ref",
+                      "ref": "Z48uNY",
+                      "name": "Choose Image Button",
+                      "descendants": {
+                        "apYXb": {
+                          "icon": "folder-open"
+                        },
+                        "J5X8Lh": {
+                          "content": "Elegir imagen"
+                        }
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "id": "FZmiH",
+                      "name": "Upload Accessibility Note",
+                      "fill": "$muted",
+                      "textGrowth": "fixed-width",
+                      "width": 430,
+                      "content": "También podés activar este control con el teclado.",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 12
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "xXvrr",
+      "x": 1520,
+      "y": 600,
+      "name": "Desktop / 02 Imagen lista",
+      "clip": true,
+      "width": 1440,
+      "height": 1024,
+      "fill": "$paper",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "t7TTr",
+          "name": "App Header",
+          "width": "fill_container",
+          "height": 72,
+          "stroke": "$line",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "padding": [
+            0,
+            64
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "xKvam",
+              "name": "Brand",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "wpajh",
+                  "name": "Brand Mark",
+                  "width": 32,
+                  "height": 38,
+                  "fill": "$accent",
+                  "cornerRadius": 4,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    8,
+                    7
+                  ],
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "Lyokb",
+                      "name": "Paper Line 1",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "BezyH",
+                      "name": "Paper Line 2",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "MZdB0",
+                      "name": "Paper Line 3",
+                      "fill": "#FFFFFF",
+                      "width": 12,
+                      "height": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "I4AFl",
+                  "name": "Brand Name",
+                  "fill": "$ink",
+                  "content": "PasaData",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 19,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "C64EKP",
+              "name": "Privacy Note",
+              "fill": "$muted",
+              "content": "Sin cuentas · Sin historial",
+              "fontFamily": "$font-ui",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "dZEie",
+          "name": "Main Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 30,
+          "padding": [
+            38,
+            80,
+            48,
+            80
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "Mu3da",
+              "name": "Workflow Steps",
+              "width": "fill_container",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "XgLei",
+                  "name": "Step 1",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "wrCSY",
+                      "name": "Step Marker 1",
+                      "fill": "$accent",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$accent",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "qAx0N",
+                      "name": "Step Label 1",
+                      "fill": "$ink",
+                      "content": "Elegir imagen",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "S8kzk",
+                      "name": "Step Connector 1",
+                      "fill": "$line",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "SHxRk",
+                  "name": "Step 2",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "uewcO",
+                      "name": "Step Marker 2",
+                      "fill": "$paper",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$line",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "TPpYr",
+                      "name": "Step Label 2",
+                      "fill": "$muted",
+                      "content": "Procesar",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "UWfDs",
+                      "name": "Step Connector 2",
+                      "fill": "$line",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "EFXZU",
+                  "name": "Step 3",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "bVYMd",
+                      "name": "Step Marker 3",
+                      "fill": "$paper",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$line",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "Zbcxa",
+                      "name": "Step Label 3",
+                      "fill": "$muted",
+                      "content": "Revisar",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "JfSml",
+                      "name": "Step Connector 3",
+                      "fill": "$line",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "LqAH3",
+                  "name": "Step 4",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "QqYUV",
+                      "name": "Step Marker 4",
+                      "fill": "$paper",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$line",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "G5EjI",
+                      "name": "Step Label 4",
+                      "fill": "$muted",
+                      "content": "Descargar Excel",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "rjmrF",
+              "name": "Ready Layout",
+              "width": "fill_container",
+              "height": "fill_container",
+              "gap": 56,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "HQ9dl",
+                  "name": "Image Preview Panel",
+                  "width": 650,
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 14,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "KjNXx",
+                      "name": "Image Preview",
+                      "width": "fill_container",
+                      "height": "fill_container",
+                      "fill": "#DDE4DF",
+                      "cornerRadius": 14,
+                      "stroke": "$line",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "gap": 16,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "SknEZ",
+                          "name": "Previewed Paper",
+                          "width": 360,
+                          "height": 470,
+                          "fill": "#FFFFFF",
+                          "cornerRadius": 5,
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "#17211D24",
+                            "offset": {
+                              "x": 0,
+                              "y": 12
+                            },
+                            "blur": 28
+                          },
+                          "layout": "vertical",
+                          "gap": 13,
+                          "padding": [
+                            34,
+                            28
+                          ],
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 3,
+                              "id": "RjnUJ",
+                              "name": "Handwritten Line 1",
+                              "rotation": -1,
+                              "fill": "#687A95",
+                              "width": 240,
+                              "height": 3
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 3,
+                              "id": "q3hPuD",
+                              "name": "Handwritten Line 2",
+                              "rotation": 1,
+                              "fill": "#8896A9",
+                              "width": 290,
+                              "height": 3
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 3,
+                              "id": "xrx8d",
+                              "name": "Handwritten Line 3",
+                              "rotation": -1,
+                              "fill": "#687A95",
+                              "width": 290,
+                              "height": 3
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 3,
+                              "id": "bUCph",
+                              "name": "Handwritten Line 4",
+                              "rotation": 1,
+                              "fill": "#8896A9",
+                              "width": 240,
+                              "height": 3
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 3,
+                              "id": "m1EfpS",
+                              "name": "Handwritten Line 5",
+                              "rotation": -1,
+                              "fill": "#687A95",
+                              "width": 290,
+                              "height": 3
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 3,
+                              "id": "gH9oW",
+                              "name": "Handwritten Line 6",
+                              "rotation": 1,
+                              "fill": "#8896A9",
+                              "width": 290,
+                              "height": 3
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 3,
+                              "id": "T9PSs",
+                              "name": "Handwritten Line 7",
+                              "rotation": -1,
+                              "fill": "#687A95",
+                              "width": 240,
+                              "height": 3
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 3,
+                              "id": "iwkAj",
+                              "name": "Handwritten Line 8",
+                              "rotation": 1,
+                              "fill": "#8896A9",
+                              "width": 290,
+                              "height": 3
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 3,
+                              "id": "xiyh5",
+                              "name": "Handwritten Line 9",
+                              "rotation": -1,
+                              "fill": "#687A95",
+                              "width": 290,
+                              "height": 3
+                            },
+                            {
+                              "type": "rectangle",
+                              "cornerRadius": 3,
+                              "id": "qQKPi",
+                              "name": "Handwritten Line 10",
+                              "rotation": 1,
+                              "fill": "#8896A9",
+                              "width": 240,
+                              "height": 3
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "mrIeH",
+                      "name": "Preview Caption",
+                      "width": "fill_container",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "NwR13",
+                          "name": "File Name",
+                          "fill": "$ink",
+                          "content": "entrevista-carmen.jpg",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 14,
+                          "fontWeight": "650"
+                        },
+                        {
+                          "type": "text",
+                          "id": "thZNR",
+                          "name": "File Meta",
+                          "fill": "$muted",
+                          "content": "2,4 MB",
+                          "fontFamily": "$font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Y4yXp",
+                  "name": "Processing Setup",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 20,
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "cA2jY",
+                      "name": "Kicker",
+                      "fill": "$accent",
+                      "content": "Imagen lista",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "toKVp",
+                      "name": "Page Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Revisá la foto antes de procesarla.",
+                      "lineHeight": 1.12,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 42,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "text",
+                      "id": "oEzwZ",
+                      "name": "Page Description",
+                      "fill": "$muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Asegurate de que el texto se vea completo y con buena luz. Reemplazar la imagen descartará cualquier resultado anterior.",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 17
+                    },
+                    {
+                      "type": "frame",
+                      "id": "jh6q2",
+                      "name": "Provider Notice",
+                      "width": "fill_container",
+                      "fill": "$warning-soft",
+                      "cornerRadius": 10,
+                      "stroke": "#E7C489",
+                      "strokeWidth": 1,
+                      "layout": "vertical",
+                      "gap": 9,
+                      "padding": [
+                        16,
+                        18
+                      ],
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "T4Extc",
+                          "name": "Provider Notice Heading",
+                          "gap": 9,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "NZjBC",
+                              "name": "Provider Notice Icon",
+                              "width": 19,
+                              "height": 19,
+                              "icon": "cloud-upload",
+                              "library": "lucide",
+                              "fill": "$warning"
+                            },
+                            {
+                              "type": "text",
+                              "id": "zK3wA",
+                              "name": "Provider Notice Title",
+                              "fill": "$ink",
+                              "content": "Antes de continuar",
+                              "fontFamily": "$font-ui",
+                              "fontSize": 15,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "PFNbw",
+                          "name": "Provider Notice Text",
+                          "fill": "$ink",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "La imagen contiene datos personales y se enviará al proveedor externo de IA para extraerlos. La app no crea historial ni almacenamiento propio. Las condiciones de retención del proveedor deben verificarse antes de producción.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "$font-ui",
+                          "fontSize": 14
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "J2KXG",
+                      "name": "Ready Actions",
+                      "width": "fill_container",
+                      "gap": 12,
+                      "children": [
+                        {
+                          "id": "cPtTv",
+                          "type": "ref",
+                          "ref": "Z48uNY",
+                          "name": "Process Image Button",
+                          "width": "fill_container",
+                          "descendants": {
+                            "apYXb": {
+                              "icon": "sparkles"
+                            },
+                            "J5X8Lh": {
+                              "content": "Procesar imagen"
+                            }
+                          }
+                        },
+                        {
+                          "id": "uXSy9",
+                          "type": "ref",
+                          "ref": "OXwFC",
+                          "name": "Replace Image Button",
+                          "width": "fill_container",
+                          "descendants": {
+                            "u6Ddf8": {
+                              "icon": "replace"
+                            },
+                            "N0vQpg": {
+                              "content": "Reemplazar imagen"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Y81wRJ",
+      "x": 3040,
+      "y": 600,
+      "name": "Desktop / 03 Procesando",
+      "clip": true,
+      "width": 1440,
+      "height": 960,
+      "fill": "$paper",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "ivuC8",
+          "name": "App Header",
+          "width": "fill_container",
+          "height": 72,
+          "stroke": "$line",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "padding": [
+            0,
+            64
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "U3YMCZ",
+              "name": "Brand",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "GrqfZ",
+                  "name": "Brand Mark",
+                  "width": 32,
+                  "height": 38,
+                  "fill": "$accent",
+                  "cornerRadius": 4,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    8,
+                    7
+                  ],
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "dKTPZ",
+                      "name": "Paper Line 1",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "DjwM2",
+                      "name": "Paper Line 2",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "rlEnV",
+                      "name": "Paper Line 3",
+                      "fill": "#FFFFFF",
+                      "width": 12,
+                      "height": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "fyvUH",
+                  "name": "Brand Name",
+                  "fill": "$ink",
+                  "content": "PasaData",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 19,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "C1z4n",
+              "name": "Privacy Note",
+              "fill": "$muted",
+              "content": "Sin cuentas · Sin historial",
+              "fontFamily": "$font-ui",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Q7adja",
+          "name": "Main Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 34,
+          "padding": [
+            42,
+            96,
+            56,
+            96
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "E9Tjb4",
+              "name": "Workflow Steps",
+              "width": "fill_container",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "LEj0q",
+                  "name": "Step 1",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "pbbWN",
+                      "name": "Step Marker 1",
+                      "fill": "$accent",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$accent",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "H68LCQ",
+                      "name": "Step Label 1",
+                      "fill": "$ink",
+                      "content": "Elegir imagen",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "HLkZu",
+                      "name": "Step Connector 1",
+                      "fill": "$accent",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "CUKmn",
+                  "name": "Step 2",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "hIfid",
+                      "name": "Step Marker 2",
+                      "fill": "$accent",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$accent",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "J5tTTH",
+                      "name": "Step Label 2",
+                      "fill": "$ink",
+                      "content": "Procesar",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "iA9jo",
+                      "name": "Step Connector 2",
+                      "fill": "$line",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "uvjHQ",
+                  "name": "Step 3",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "A1Kd5",
+                      "name": "Step Marker 3",
+                      "fill": "$paper",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$line",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "T35sn",
+                      "name": "Step Label 3",
+                      "fill": "$muted",
+                      "content": "Revisar",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "RNRCG",
+                      "name": "Step Connector 3",
+                      "fill": "$line",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hy6qm",
+                  "name": "Step 4",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "QWz7v",
+                      "name": "Step Marker 4",
+                      "fill": "$paper",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$line",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "EOf7m",
+                      "name": "Step Label 4",
+                      "fill": "$muted",
+                      "content": "Descargar Excel",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "UuYVw",
+              "name": "Processing Stage",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 22,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "BH42D",
+                  "name": "Processing Indicator",
+                  "innerRadius": 0.72,
+                  "startAngle": 18,
+                  "sweepAngle": 275,
+                  "fill": "$accent",
+                  "width": 82,
+                  "height": 82
+                },
+                {
+                  "type": "text",
+                  "id": "f59F7n",
+                  "name": "Processing Title",
+                  "fill": "$ink",
+                  "textGrowth": "fixed-width",
+                  "width": 600,
+                  "content": "Estamos leyendo la entrevista",
+                  "lineHeight": 1.25,
+                  "fontFamily": "$font-ui",
+                  "fontSize": 32,
+                  "fontWeight": "650"
+                },
+                {
+                  "type": "text",
+                  "id": "rlKFz",
+                  "name": "Processing Message",
+                  "fill": "$muted",
+                  "textGrowth": "fixed-width",
+                  "width": 620,
+                  "content": "Puede tardar unos segundos. No cierres esta página ni reemplaces la imagen durante el proceso.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font-ui",
+                  "fontSize": 16
+                },
+                {
+                  "type": "frame",
+                  "id": "b81D3",
+                  "name": "Processing Status",
+                  "fill": "$accent-soft",
+                  "cornerRadius": 8,
+                  "gap": 10,
+                  "padding": [
+                    10,
+                    14
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "QXIlh",
+                      "name": "Processing Status Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "scan-text",
+                      "library": "lucide",
+                      "fill": "$accent"
+                    },
+                    {
+                      "type": "text",
+                      "id": "c2spO",
+                      "name": "Processing Status Text",
+                      "fill": "$ink",
+                      "content": "Extrayendo los 9 campos acordados…",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "id": "vPXpO",
+                  "type": "ref",
+                  "ref": "Z48uNY",
+                  "name": "Disabled Export Button",
+                  "opacity": 0.38,
+                  "descendants": {
+                    "apYXb": {
+                      "icon": "download"
+                    },
+                    "J5X8Lh": {
+                      "content": "Descargar Excel"
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "nZr48",
+                  "name": "Disabled Export Explanation",
+                  "fill": "$muted",
+                  "textGrowth": "fixed-width",
+                  "width": 520,
+                  "content": "La descarga estará disponible después de revisar el resultado.",
+                  "lineHeight": 1.4,
+                  "fontFamily": "$font-ui",
+                  "fontSize": 12
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "WMtic",
+      "x": 0,
+      "y": 1700,
+      "name": "Desktop / 04 Revisión",
+      "clip": true,
+      "width": 1440,
+      "height": 1120,
+      "fill": "$paper",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "Njvyr",
+          "name": "App Header",
+          "width": "fill_container",
+          "height": 72,
+          "stroke": "$line",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "padding": [
+            0,
+            64
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Y36XU",
+              "name": "Brand",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "v8G6Pu",
+                  "name": "Brand Mark",
+                  "width": 32,
+                  "height": 38,
+                  "fill": "$accent",
+                  "cornerRadius": 4,
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    8,
+                    7
+                  ],
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "DdgB3",
+                      "name": "Paper Line 1",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "BnN33",
+                      "name": "Paper Line 2",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "ifMkI",
+                      "name": "Paper Line 3",
+                      "fill": "#FFFFFF",
+                      "width": 12,
+                      "height": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "ChmTy",
+                  "name": "Brand Name",
+                  "fill": "$ink",
+                  "content": "PasaData",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 19,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "ND7Ue",
+              "name": "Privacy Note",
+              "fill": "$muted",
+              "content": "Sin cuentas · Sin historial",
+              "fontFamily": "$font-ui",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "MQa5U",
+          "name": "Main Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 24,
+          "padding": [
+            30,
+            72,
+            40,
+            72
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "aDh1q",
+              "name": "Workflow Steps",
+              "width": "fill_container",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "b07TF",
+                  "name": "Step 1",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "Pkt62",
+                      "name": "Step Marker 1",
+                      "fill": "$accent",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$accent",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "e7kKYC",
+                      "name": "Step Label 1",
+                      "fill": "$ink",
+                      "content": "Elegir imagen",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "uztEZ",
+                      "name": "Step Connector 1",
+                      "fill": "$accent",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "v16glJ",
+                  "name": "Step 2",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "ZSRRP",
+                      "name": "Step Marker 2",
+                      "fill": "$accent",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$accent",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "P7E5CZ",
+                      "name": "Step Label 2",
+                      "fill": "$ink",
+                      "content": "Procesar",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "OQ285",
+                      "name": "Step Connector 2",
+                      "fill": "$accent",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "jq3so",
+                  "name": "Step 3",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "uHC7r",
+                      "name": "Step Marker 3",
+                      "fill": "$accent",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$accent",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "eGn6Q",
+                      "name": "Step Label 3",
+                      "fill": "$ink",
+                      "content": "Revisar",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "r6Jlmx",
+                      "name": "Step Connector 3",
+                      "fill": "$line",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "i87Zc",
+                  "name": "Step 4",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "nMhsi",
+                      "name": "Step Marker 4",
+                      "fill": "$paper",
+                      "width": 28,
+                      "height": 28,
+                      "stroke": "$line",
+                      "strokeWidth": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "m6VTB5",
+                      "name": "Step Label 4",
+                      "fill": "$muted",
+                      "content": "Descargar Excel",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "MLspa",
+              "name": "Review Header",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "E8Vrq6",
+                  "name": "Review Heading Copy",
+                  "width": 760,
+                  "layout": "vertical",
+                  "gap": 7,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "xYwxy",
+                      "name": "Review Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Revisá antes de descargar",
+                      "lineHeight": 1.18,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 36,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "text",
+                      "id": "wPv3t",
+                      "name": "Review Description",
+                      "fill": "$muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Corregí cualquier dato. Los campos que no se pudieron leer quedan vacíos y marcados; podés completarlos o exportarlos en blanco.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 15
+                    }
+                  ]
+                },
+                {
+                  "id": "mQYjM",
+                  "type": "ref",
+                  "ref": "kVIWS",
+                  "name": "Review Count",
+                  "descendants": {
+                    "hAG8U": {
+                      "content": "2 campos vacíos"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "NaqzE",
+              "name": "Nine Field Review Form",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 18,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "voouy",
+                  "name": "Field Row 1",
+                  "width": "fill_container",
+                  "gap": 18,
+                  "children": [
+                    {
+                      "id": "otlPE",
+                      "type": "ref",
+                      "ref": "aYgSe",
+                      "name": "Field / Nombre",
+                      "width": "fill_container",
+                      "descendants": {
+                        "J0Hqq": {
+                          "content": "Nombre"
+                        },
+                        "M25rN": {
+                          "content": "María Elena",
+                          "fill": "$ink"
+                        }
+                      }
+                    },
+                    {
+                      "id": "X0rlm",
+                      "type": "ref",
+                      "ref": "aYgSe",
+                      "name": "Field / Apellido",
+                      "width": "fill_container",
+                      "descendants": {
+                        "J0Hqq": {
+                          "content": "Apellido"
+                        },
+                        "M25rN": {
+                          "content": "Sosa",
+                          "fill": "$ink"
+                        }
+                      }
+                    },
+                    {
+                      "id": "aQWjj",
+                      "type": "ref",
+                      "ref": "aYgSe",
+                      "name": "Field / DNI",
+                      "width": "fill_container",
+                      "descendants": {
+                        "J0Hqq": {
+                          "content": "DNI"
+                        },
+                        "M25rN": {
+                          "content": "28.445.781",
+                          "fill": "$ink"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "S6redp",
+                  "name": "Field Row 2",
+                  "width": "fill_container",
+                  "gap": 18,
+                  "children": [
+                    {
+                      "id": "k0tE5",
+                      "type": "ref",
+                      "ref": "aYgSe",
+                      "name": "Field / Estado civil",
+                      "width": "fill_container",
+                      "descendants": {
+                        "J0Hqq": {
+                          "content": "Estado civil"
+                        },
+                        "M25rN": {
+                          "content": "Casada",
+                          "fill": "$ink"
+                        }
+                      }
+                    },
+                    {
+                      "id": "cPe46",
+                      "type": "ref",
+                      "ref": "aYgSe",
+                      "name": "Field / Domicilio",
+                      "width": "fill_container",
+                      "descendants": {
+                        "J0Hqq": {
+                          "content": "Domicilio"
+                        },
+                        "M25rN": {
+                          "content": "Calle 12, 840",
+                          "fill": "$ink"
+                        }
+                      }
+                    },
+                    {
+                      "id": "mo977",
+                      "type": "ref",
+                      "ref": "aYgSe",
+                      "name": "Field / Situación laboral",
+                      "width": "fill_container",
+                      "descendants": {
+                        "J0Hqq": {
+                          "content": "Situación laboral"
+                        },
+                        "M25rN": {
+                          "content": "Trabajo informal",
+                          "fill": "$ink"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "SpLRv",
+                  "name": "Field Row 3",
+                  "width": "fill_container",
+                  "gap": 18,
+                  "children": [
+                    {
+                      "id": "LiSrB",
+                      "type": "ref",
+                      "ref": "aYgSe",
+                      "name": "Field / Ingresos",
+                      "width": "fill_container",
+                      "descendants": {
+                        "J0Hqq": {
+                          "content": "Ingresos"
+                        },
+                        "xSqxG": {
+                          "stroke": "$warning",
+                          "fill": "$warning-soft"
+                        },
+                        "M25rN": {
+                          "content": "Sin dato",
+                          "fill": "$warning"
+                        },
+                        "x2i9w": {
+                          "enabled": true,
+                          "content": "No se pudo leer. Revisá este campo.",
+                          "width": "fill_container"
+                        }
+                      }
+                    },
+                    {
+                      "id": "xfOZv",
+                      "type": "ref",
+                      "ref": "aYgSe",
+                      "name": "Field / Motivo de solicitud",
+                      "width": "fill_container",
+                      "descendants": {
+                        "J0Hqq": {
+                          "content": "Motivo de solicitud"
+                        },
+                        "M25rN": {
+                          "content": "Ampliación de vivienda",
+                          "fill": "$ink"
+                        }
+                      }
+                    },
+                    {
+                      "id": "CxHQW",
+                      "type": "ref",
+                      "ref": "aYgSe",
+                      "name": "Field / Observaciones",
+                      "width": "fill_container",
+                      "descendants": {
+                        "J0Hqq": {
+                          "content": "Observaciones"
+                        },
+                        "xSqxG": {
+                          "stroke": "$warning",
+                          "fill": "$warning-soft"
+                        },
+                        "M25rN": {
+                          "content": "Sin dato",
+                          "fill": "$warning"
+                        },
+                        "x2i9w": {
+                          "enabled": true,
+                          "content": "No se pudo leer. Revisá este campo.",
+                          "width": "fill_container"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "bCVUx",
+              "name": "Review Summary",
+              "width": "fill_container",
+              "fill": "#F3F6F4",
+              "cornerRadius": 8,
+              "gap": 12,
+              "padding": [
+                14,
+                16
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "ljuRT",
+                  "name": "Review Summary Icon",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "info",
+                  "library": "lucide",
+                  "fill": "$accent"
+                },
+                {
+                  "type": "text",
+                  "id": "F7UfZ",
+                  "name": "Review Summary Text",
+                  "fill": "$ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "La planilla tendrá 1 hoja, 9 columnas en este orden y 1 fila de entrevista. Los campos vacíos se exportan como celdas en blanco.",
+                  "lineHeight": 1.4,
+                  "fontFamily": "$font-ui",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Cqk0Z",
+              "name": "Review Actions",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Z2Z2r",
+                  "name": "Review Save Note",
+                  "fill": "$muted",
+                  "content": "Tus cambios se usan solo para esta descarga.",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "POe1U",
+                  "name": "Review Action Buttons",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "id": "Qjko9",
+                      "type": "ref",
+                      "ref": "OXwFC",
+                      "name": "Replace Image Button",
+                      "descendants": {
+                        "u6Ddf8": {
+                          "icon": "replace"
+                        },
+                        "N0vQpg": {
+                          "content": "Reemplazar imagen"
+                        }
+                      }
+                    },
+                    {
+                      "id": "vgcBq",
+                      "type": "ref",
+                      "ref": "Z48uNY",
+                      "name": "Export Excel Button",
+                      "descendants": {
+                        "apYXb": {
+                          "icon": "download"
+                        },
+                        "J5X8Lh": {
+                          "content": "Descargar Excel"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "eG1EO",
+      "x": 1520,
+      "y": 1700,
+      "name": "Desktop / 05 Errores y confirmación",
+      "clip": true,
+      "width": 1440,
+      "height": 1200,
+      "fill": "$canvas",
+      "layout": "vertical",
+      "gap": 24,
+      "padding": [
+        44,
+        64
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "R6akDo",
+          "name": "States Title",
+          "fill": "$ink",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "Estados de recuperación",
+          "lineHeight": 1.2,
+          "fontFamily": "$font-ui",
+          "fontSize": 34,
+          "fontWeight": "650"
+        },
+        {
+          "type": "text",
+          "id": "iuH75",
+          "name": "States Description",
+          "fill": "$muted",
+          "textGrowth": "fixed-width",
+          "width": 900,
+          "content": "Cada error explica qué pasó, bloquea la descarga y ofrece una acción concreta. Estos paneles reemplazan el área principal del flujo.",
+          "lineHeight": 1.45,
+          "fontFamily": "$font-ui",
+          "fontSize": 15
+        },
+        {
+          "type": "frame",
+          "id": "EpCnL",
+          "name": "State Variants",
+          "width": "fill_container",
+          "height": 760,
+          "layout": "vertical",
+          "gap": 18,
+          "children": [
+            {
+              "type": "frame",
+              "id": "i17bbd",
+              "name": "Invalid Image Error",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$paper",
+              "cornerRadius": 12,
+              "stroke": "#E0B6B0",
+              "strokeWidth": 1,
+              "gap": 22,
+              "padding": [
+                22,
+                24
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "vSvwR",
+                  "name": "Invalid Image Error Icon Container",
+                  "width": 52,
+                  "height": 52,
+                  "fill": "$danger-soft",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "v24ShX",
+                      "name": "Invalid Image Error Icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "file-x",
+                      "library": "lucide",
+                      "fill": "$danger"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "KBaaE",
+                  "name": "Invalid Image Error Copy",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "piok0",
+                      "name": "Invalid Image Error Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "No pudimos usar esta imagen",
+                      "lineHeight": 1.3,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 20,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "text",
+                      "id": "SUK0R",
+                      "name": "Invalid Image Error Message",
+                      "fill": "$muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "El archivo no es una imagen compatible o supera el límite permitido. Elegí otra imagen y volvé a intentarlo.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14
+                    },
+                    {
+                      "type": "text",
+                      "id": "c1OFfV",
+                      "name": "Invalid Image Error Detail",
+                      "fill": "$danger",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "No se envió ningún dato al proveedor.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "id": "ESrD4",
+                  "type": "ref",
+                  "ref": "Z48uNY",
+                  "name": "Invalid Image Error Action",
+                  "width": 240,
+                  "descendants": {
+                    "apYXb": {
+                      "icon": "folder-open"
+                    },
+                    "J5X8Lh": {
+                      "content": "Elegir otra imagen"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "TnjuV",
+              "name": "Provider Failure Error",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$paper",
+              "cornerRadius": 12,
+              "stroke": "#E0B6B0",
+              "strokeWidth": 1,
+              "gap": 22,
+              "padding": [
+                22,
+                24
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "MHTYC",
+                  "name": "Provider Failure Error Icon Container",
+                  "width": 52,
+                  "height": 52,
+                  "fill": "$danger-soft",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "syxCN",
+                      "name": "Provider Failure Error Icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "cloud-off",
+                      "library": "lucide",
+                      "fill": "$danger"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "pnpl4",
+                  "name": "Provider Failure Error Copy",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "mB6MF",
+                      "name": "Provider Failure Error Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "El proveedor no respondió",
+                      "lineHeight": 1.3,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 20,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "text",
+                      "id": "mJICj",
+                      "name": "Provider Failure Error Message",
+                      "fill": "$muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "La imagen sigue seleccionada, pero no se pudo procesar. Revisá tu conexión y reintentá en unos minutos.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14
+                    },
+                    {
+                      "type": "text",
+                      "id": "hkh6S",
+                      "name": "Provider Failure Error Detail",
+                      "fill": "$danger",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "No hay resultados disponibles para exportar.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "id": "wFQTf",
+                  "type": "ref",
+                  "ref": "Z48uNY",
+                  "name": "Provider Failure Error Action",
+                  "width": 240,
+                  "descendants": {
+                    "apYXb": {
+                      "icon": "refresh-cw"
+                    },
+                    "J5X8Lh": {
+                      "content": "Reintentar procesamiento"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "g8Vj2r",
+              "name": "Malformed Extraction Error",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$paper",
+              "cornerRadius": 12,
+              "stroke": "#E0B6B0",
+              "strokeWidth": 1,
+              "gap": 22,
+              "padding": [
+                22,
+                24
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "EXFDj",
+                  "name": "Malformed Extraction Error Icon Container",
+                  "width": 52,
+                  "height": 52,
+                  "fill": "$danger-soft",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "zJBu0",
+                      "name": "Malformed Extraction Error Icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "braces",
+                      "library": "lucide",
+                      "fill": "$danger"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "cJmsL",
+                  "name": "Malformed Extraction Error Copy",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "J1qfxe",
+                      "name": "Malformed Extraction Error Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "La respuesta no tenía el formato esperado",
+                      "lineHeight": 1.3,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 20,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "text",
+                      "id": "A6Soc",
+                      "name": "Malformed Extraction Error Message",
+                      "fill": "$muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Por seguridad, descartamos el resultado porque no cumplía el contrato de nueve campos.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14
+                    },
+                    {
+                      "type": "text",
+                      "id": "sAbsT",
+                      "name": "Malformed Extraction Error Detail",
+                      "fill": "$danger",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "No se conservaron datos parciales ni se habilitó la descarga.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "id": "Sgds6",
+                  "type": "ref",
+                  "ref": "Z48uNY",
+                  "name": "Malformed Extraction Error Action",
+                  "width": 240,
+                  "descendants": {
+                    "apYXb": {
+                      "icon": "refresh-cw"
+                    },
+                    "J5X8Lh": {
+                      "content": "Procesar de nuevo"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "IbLMb",
+              "name": "Export Success",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$paper",
+              "cornerRadius": 12,
+              "stroke": "$accent",
+              "strokeWidth": 1,
+              "gap": 22,
+              "padding": [
+                22,
+                24
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "stjeq",
+                  "name": "Export Success Icon Container",
+                  "width": 52,
+                  "height": 52,
+                  "fill": "$accent-soft",
+                  "cornerRadius": 10,
+                  "layout": "vertical",
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "K6EY6",
+                      "name": "Export Success Icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "file-check",
+                      "library": "lucide",
+                      "fill": "$accent"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "yjda5",
+                  "name": "Export Success Copy",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "mfqgP",
+                      "name": "Export Success Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Excel descargado",
+                      "lineHeight": 1.3,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 20,
+                      "fontWeight": "650"
+                    },
+                    {
+                      "type": "text",
+                      "id": "hxBQa",
+                      "name": "Export Success Message",
+                      "fill": "$muted",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "El archivo incluye una hoja, nueve columnas y una fila con los valores revisados.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14
+                    },
+                    {
+                      "type": "text",
+                      "id": "WLbgv",
+                      "name": "Export Success Detail",
+                      "fill": "$accent",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Podés reemplazar la imagen para iniciar otra entrevista.",
+                      "lineHeight": 1.35,
+                      "fontFamily": "$font-ui",
+                      "fontSize": 12,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "id": "drfPf",
+                  "type": "ref",
+                  "ref": "OXwFC",
+                  "name": "Export Success Action",
+                  "width": 240,
+                  "descendants": {
+                    "u6Ddf8": {
+                      "icon": "replace"
+                    },
+                    "N0vQpg": {
+                      "content": "Procesar otra imagen"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "U4Klc",
+          "name": "Blocked Export Rule",
+          "width": "fill_container",
+          "fill": "$danger-soft",
+          "cornerRadius": 8,
+          "gap": 10,
+          "padding": [
+            12,
+            14
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "pglM8",
+              "name": "Blocked Export Icon",
+              "width": 17,
+              "height": 17,
+              "icon": "lock-keyhole",
+              "library": "lucide",
+              "fill": "$danger"
+            },
+            {
+              "type": "text",
+              "id": "XbYLV",
+              "name": "Blocked Export Text",
+              "fill": "$ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Regla común: ningún error permite descargar resultados anteriores, parciales o fallidos.",
+              "fontFamily": "$font-ui",
+              "fontSize": 13,
+              "fontWeight": "650"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "CiOPF",
+      "x": 3040,
+      "y": 1700,
+      "name": "Mobile / 01 Imagen lista",
+      "clip": true,
+      "width": 390,
+      "height": 1250,
+      "fill": "$paper",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "iAx4E",
+          "name": "Mobile Header",
+          "width": "fill_container",
+          "height": 64,
+          "stroke": "$line",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "padding": [
+            0,
+            20
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "XYn0q",
+              "name": "Mobile Brand",
+              "gap": 9,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "uA7jX",
+                  "name": "Mobile Brand Mark",
+                  "width": 28,
+                  "height": 34,
+                  "fill": "$accent",
+                  "cornerRadius": 4,
+                  "layout": "vertical",
+                  "gap": 3,
+                  "padding": [
+                    7,
+                    6
+                  ],
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "g1FgK",
+                      "name": "Mobile Paper Line 1",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "UOGPI",
+                      "name": "Mobile Paper Line 2",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "V3vQit",
+                      "name": "Mobile Paper Line 3",
+                      "fill": "#FFFFFF",
+                      "width": 10,
+                      "height": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "SpBRI",
+                  "name": "Mobile Brand Name",
+                  "fill": "$ink",
+                  "content": "PasaData",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 17,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "DbHM0",
+              "name": "Mobile Step",
+              "fill": "$muted",
+              "content": "Paso 1 de 4",
+              "fontFamily": "$font-ui",
+              "fontSize": 12,
+              "fontWeight": "650"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "peMpa",
+          "name": "Mobile Main Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 18,
+          "padding": [
+            24,
+            20,
+            32,
+            20
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "WtxaV",
+              "name": "Mobile Kicker",
+              "fill": "$accent",
+              "content": "Imagen lista",
+              "fontFamily": "$font-ui",
+              "fontSize": 12,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "LcgXm",
+              "name": "Mobile Ready Title",
+              "fill": "$ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Revisá la foto antes de procesarla.",
+              "lineHeight": 1.15,
+              "fontFamily": "$font-ui",
+              "fontSize": 30,
+              "fontWeight": "650"
+            },
+            {
+              "type": "text",
+              "id": "jwiSr",
+              "name": "Mobile Ready Description",
+              "fill": "$muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Asegurate de que el texto se vea completo y con buena luz.",
+              "lineHeight": 1.45,
+              "fontFamily": "$font-ui",
+              "fontSize": 15
+            },
+            {
+              "type": "frame",
+              "id": "vSHlI",
+              "name": "Mobile Image Preview",
+              "width": "fill_container",
+              "height": 430,
+              "fill": "#DDE4DF",
+              "cornerRadius": 12,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 12,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "CLrMf",
+                  "name": "Mobile Previewed Paper",
+                  "width": 230,
+                  "height": 320,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 4,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#17211D22",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 20
+                  },
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": [
+                    25,
+                    20
+                  ],
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "HuxGC",
+                      "name": "Mobile Handwritten Line 1",
+                      "rotation": -1,
+                      "fill": "#687A95",
+                      "width": 150,
+                      "height": 3
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "ezCSp",
+                      "name": "Mobile Handwritten Line 2",
+                      "rotation": 1,
+                      "fill": "#8896A9",
+                      "width": 188,
+                      "height": 3
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "ecQis",
+                      "name": "Mobile Handwritten Line 3",
+                      "rotation": -1,
+                      "fill": "#687A95",
+                      "width": 188,
+                      "height": 3
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "hzOwR",
+                      "name": "Mobile Handwritten Line 4",
+                      "rotation": 1,
+                      "fill": "#8896A9",
+                      "width": 150,
+                      "height": 3
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "ngDU9",
+                      "name": "Mobile Handwritten Line 5",
+                      "rotation": -1,
+                      "fill": "#687A95",
+                      "width": 188,
+                      "height": 3
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "coYx6",
+                      "name": "Mobile Handwritten Line 6",
+                      "rotation": 1,
+                      "fill": "#8896A9",
+                      "width": 188,
+                      "height": 3
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "rFHLi",
+                      "name": "Mobile Handwritten Line 7",
+                      "rotation": -1,
+                      "fill": "#687A95",
+                      "width": 150,
+                      "height": 3
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "wM33E",
+                      "name": "Mobile Handwritten Line 8",
+                      "rotation": 1,
+                      "fill": "#8896A9",
+                      "width": 188,
+                      "height": 3
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 3,
+                      "id": "WJqYA",
+                      "name": "Mobile Handwritten Line 9",
+                      "rotation": -1,
+                      "fill": "#687A95",
+                      "width": 188,
+                      "height": 3
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sZMck",
+              "name": "Mobile File Caption",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Py99D",
+                  "name": "Mobile File Name",
+                  "fill": "$ink",
+                  "content": "entrevista-carmen.jpg",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 13,
+                  "fontWeight": "650"
+                },
+                {
+                  "type": "text",
+                  "id": "AFHfu",
+                  "name": "Mobile File Meta",
+                  "fill": "$muted",
+                  "content": "2,4 MB",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "yV8rA",
+              "name": "Mobile Provider Notice",
+              "width": "fill_container",
+              "fill": "$warning-soft",
+              "cornerRadius": 9,
+              "stroke": "#E7C489",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 8,
+              "padding": 14,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "ywwTs",
+                  "name": "Mobile Notice Heading",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nzxYq",
+                      "name": "Mobile Notice Icon",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "cloud-upload",
+                      "library": "lucide",
+                      "fill": "$warning"
+                    },
+                    {
+                      "type": "text",
+                      "id": "IaDLJ",
+                      "name": "Mobile Notice Title",
+                      "fill": "$ink",
+                      "content": "Antes de continuar",
+                      "fontFamily": "$font-ui",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "lXu0r",
+                  "name": "Mobile Notice Text",
+                  "fill": "$ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "La imagen con datos personales se enviará al proveedor externo de IA. La app no guarda imagen, datos ni historial. La retención del proveedor debe verificarse antes de producción.",
+                  "lineHeight": 1.45,
+                  "fontFamily": "$font-ui",
+                  "fontSize": 13
+                }
+              ]
+            },
+            {
+              "id": "GFJ89",
+              "type": "ref",
+              "ref": "Z48uNY",
+              "name": "Mobile Process Button",
+              "width": "fill_container",
+              "descendants": {
+                "apYXb": {
+                  "icon": "sparkles"
+                },
+                "J5X8Lh": {
+                  "content": "Procesar imagen"
+                }
+              }
+            },
+            {
+              "id": "NfUoF",
+              "type": "ref",
+              "ref": "OXwFC",
+              "name": "Mobile Replace Button",
+              "width": "fill_container",
+              "descendants": {
+                "u6Ddf8": {
+                  "icon": "replace"
+                },
+                "N0vQpg": {
+                  "content": "Reemplazar imagen"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "yO8fo",
+      "x": 3510,
+      "y": 1700,
+      "name": "Mobile / 02 Revisión",
+      "clip": true,
+      "width": 390,
+      "height": 1700,
+      "fill": "$paper",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "VPw7Z",
+          "name": "Mobile Header",
+          "width": "fill_container",
+          "height": 64,
+          "stroke": "$line",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "padding": [
+            0,
+            20
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "t1EiEt",
+              "name": "Mobile Brand",
+              "gap": 9,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "hayGM",
+                  "name": "Mobile Brand Mark",
+                  "width": 28,
+                  "height": 34,
+                  "fill": "$accent",
+                  "cornerRadius": 4,
+                  "layout": "vertical",
+                  "gap": 3,
+                  "padding": [
+                    7,
+                    6
+                  ],
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "TIsJF",
+                      "name": "Mobile Paper Line 1",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "a0dkp",
+                      "name": "Mobile Paper Line 2",
+                      "fill": "#FFFFFF",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 2,
+                      "id": "g1q3i",
+                      "name": "Mobile Paper Line 3",
+                      "fill": "#FFFFFF",
+                      "width": 10,
+                      "height": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "LGqNH",
+                  "name": "Mobile Brand Name",
+                  "fill": "$ink",
+                  "content": "PasaData",
+                  "fontFamily": "$font-ui",
+                  "fontSize": 17,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "kY4k6",
+              "name": "Mobile Step",
+              "fill": "$muted",
+              "content": "Paso 3 de 4",
+              "fontFamily": "$font-ui",
+              "fontSize": 12,
+              "fontWeight": "650"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "S9PsE",
+          "name": "Mobile Review Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            24,
+            20,
+            34,
+            20
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "TbCPQ",
+              "name": "Mobile Review Title",
+              "fill": "$ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Revisá los 9 campos",
+              "lineHeight": 1.15,
+              "fontFamily": "$font-ui",
+              "fontSize": 30,
+              "fontWeight": "650"
+            },
+            {
+              "type": "text",
+              "id": "DjimG",
+              "name": "Mobile Review Description",
+              "fill": "$muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Corregí los datos. Los campos ilegibles quedan vacíos y marcados.",
+              "lineHeight": 1.45,
+              "fontFamily": "$font-ui",
+              "fontSize": 14
+            },
+            {
+              "id": "xo5Lg",
+              "type": "ref",
+              "ref": "kVIWS",
+              "name": "Mobile Review Count",
+              "descendants": {
+                "hAG8U": {
+                  "content": "2 campos vacíos"
+                }
+              }
+            },
+            {
+              "type": "frame",
+              "id": "oTPi9",
+              "name": "Mobile Nine Field Form",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 13,
+              "children": [
+                {
+                  "id": "urkYK",
+                  "type": "ref",
+                  "ref": "aYgSe",
+                  "name": "Mobile Field / Nombre",
+                  "width": "fill_container",
+                  "descendants": {
+                    "J0Hqq": {
+                      "content": "Nombre"
+                    },
+                    "M25rN": {
+                      "content": "María Elena",
+                      "fill": "$ink"
+                    }
+                  }
+                },
+                {
+                  "id": "VQUzJ",
+                  "type": "ref",
+                  "ref": "aYgSe",
+                  "name": "Mobile Field / Apellido",
+                  "width": "fill_container",
+                  "descendants": {
+                    "J0Hqq": {
+                      "content": "Apellido"
+                    },
+                    "M25rN": {
+                      "content": "Sosa",
+                      "fill": "$ink"
+                    }
+                  }
+                },
+                {
+                  "id": "oorUC",
+                  "type": "ref",
+                  "ref": "aYgSe",
+                  "name": "Mobile Field / DNI",
+                  "width": "fill_container",
+                  "descendants": {
+                    "J0Hqq": {
+                      "content": "DNI"
+                    },
+                    "M25rN": {
+                      "content": "28.445.781",
+                      "fill": "$ink"
+                    }
+                  }
+                },
+                {
+                  "id": "M4NSf",
+                  "type": "ref",
+                  "ref": "aYgSe",
+                  "name": "Mobile Field / Estado civil",
+                  "width": "fill_container",
+                  "descendants": {
+                    "J0Hqq": {
+                      "content": "Estado civil"
+                    },
+                    "M25rN": {
+                      "content": "Casada",
+                      "fill": "$ink"
+                    }
+                  }
+                },
+                {
+                  "id": "PKvdU",
+                  "type": "ref",
+                  "ref": "aYgSe",
+                  "name": "Mobile Field / Domicilio",
+                  "width": "fill_container",
+                  "descendants": {
+                    "J0Hqq": {
+                      "content": "Domicilio"
+                    },
+                    "M25rN": {
+                      "content": "Calle 12, 840",
+                      "fill": "$ink"
+                    }
+                  }
+                },
+                {
+                  "id": "g8sx3",
+                  "type": "ref",
+                  "ref": "aYgSe",
+                  "name": "Mobile Field / Situación laboral",
+                  "width": "fill_container",
+                  "descendants": {
+                    "J0Hqq": {
+                      "content": "Situación laboral"
+                    },
+                    "M25rN": {
+                      "content": "Trabajo informal",
+                      "fill": "$ink"
+                    }
+                  }
+                },
+                {
+                  "id": "vCDjm",
+                  "type": "ref",
+                  "ref": "aYgSe",
+                  "name": "Mobile Field / Ingresos",
+                  "width": "fill_container",
+                  "descendants": {
+                    "J0Hqq": {
+                      "content": "Ingresos"
+                    },
+                    "xSqxG": {
+                      "stroke": "$warning",
+                      "fill": "$warning-soft"
+                    },
+                    "M25rN": {
+                      "content": "Sin dato",
+                      "fill": "$warning"
+                    },
+                    "x2i9w": {
+                      "enabled": true,
+                      "content": "No se pudo leer. Revisá este campo.",
+                      "width": 350
+                    }
+                  }
+                },
+                {
+                  "id": "x9ODG",
+                  "type": "ref",
+                  "ref": "aYgSe",
+                  "name": "Mobile Field / Motivo de solicitud",
+                  "width": "fill_container",
+                  "descendants": {
+                    "J0Hqq": {
+                      "content": "Motivo de solicitud"
+                    },
+                    "M25rN": {
+                      "content": "Ampliación de vivienda",
+                      "fill": "$ink"
+                    }
+                  }
+                },
+                {
+                  "id": "v1owlN",
+                  "type": "ref",
+                  "ref": "aYgSe",
+                  "name": "Mobile Field / Observaciones",
+                  "width": "fill_container",
+                  "descendants": {
+                    "J0Hqq": {
+                      "content": "Observaciones"
+                    },
+                    "xSqxG": {
+                      "stroke": "$warning",
+                      "fill": "$warning-soft"
+                    },
+                    "M25rN": {
+                      "content": "Sin dato",
+                      "fill": "$warning"
+                    },
+                    "x2i9w": {
+                      "enabled": true,
+                      "content": "No se pudo leer. Revisá este campo.",
+                      "width": 350
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "gshwe",
+              "name": "Mobile Export Summary",
+              "width": "fill_container",
+              "fill": "#F3F6F4",
+              "cornerRadius": 8,
+              "gap": 9,
+              "padding": 12,
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "xHm0B",
+                  "name": "Mobile Export Summary Icon",
+                  "width": 17,
+                  "height": 17,
+                  "icon": "info",
+                  "library": "lucide",
+                  "fill": "$accent"
+                },
+                {
+                  "type": "text",
+                  "id": "g1JqMt",
+                  "name": "Mobile Export Summary Text",
+                  "fill": "$ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Los vacíos se exportan como celdas en blanco.",
+                  "lineHeight": 1.4,
+                  "fontFamily": "$font-ui",
+                  "fontSize": 12,
+                  "fontWeight": "550"
+                }
+              ]
+            },
+            {
+              "id": "jtjZG",
+              "type": "ref",
+              "ref": "Z48uNY",
+              "name": "Mobile Export Button",
+              "width": "fill_container",
+              "descendants": {
+                "apYXb": {
+                  "icon": "download"
+                },
+                "J5X8Lh": {
+                  "content": "Descargar Excel"
+                }
+              }
+            },
+            {
+              "id": "MlL1V",
+              "type": "ref",
+              "ref": "OXwFC",
+              "name": "Mobile Review Replace Button",
+              "width": "fill_container",
+              "descendants": {
+                "u6Ddf8": {
+                  "icon": "replace"
+                },
+                "N0vQpg": {
+                  "content": "Reemplazar imagen"
+                }
+              }
+            },
+            {
+              "type": "text",
+              "id": "Sdj36",
+              "name": "Mobile Ephemeral Note",
+              "fill": "$muted",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Tus cambios se usan solo para esta descarga.",
+              "lineHeight": 1.4,
+              "fontFamily": "$font-ui",
+              "fontSize": 12
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "canvas": {
+      "type": "color",
+      "value": "#E9EEE9"
+    },
+    "paper": {
+      "type": "color",
+      "value": "#FBFCFA"
+    },
+    "ink": {
+      "type": "color",
+      "value": "#17211D"
+    },
+    "muted": {
+      "type": "color",
+      "value": "#607069"
+    },
+    "line": {
+      "type": "color",
+      "value": "#CAD5CF"
+    },
+    "accent": {
+      "type": "color",
+      "value": "#17624E"
+    },
+    "accent-soft": {
+      "type": "color",
+      "value": "#DCEBE5"
+    },
+    "warning": {
+      "type": "color",
+      "value": "#A65A12"
+    },
+    "warning-soft": {
+      "type": "color",
+      "value": "#FFF1D6"
+    },
+    "danger": {
+      "type": "color",
+      "value": "#B9382F"
+    },
+    "danger-soft": {
+      "type": "color",
+      "value": "#FCE8E5"
+    },
+    "font-ui": {
+      "type": "string",
+      "value": "Instrument Sans"
+    },
+    "font-title": {
+      "type": "string",
+      "value": "Literata"
+    }
+  },
+  "fileToken": "878c16f2-bc5d-4a2b-8868-01ad47fea9a9"
+}

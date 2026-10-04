@@ -17,7 +17,7 @@ enabled = false
 # Bind only Orchestrator's reviewed capabilities and choose team/project explicitly.
 
 [mcp_servers.pencil]
-command = "REPLACE_WITH_INSTALLED_PENCIL_MCP_EXECUTABLE"
+command = "E:\\Pen\\resources\\app.asar.unpacked\\out\\mcp-server-windows-x64.exe"
 args = ["--app", "desktop"]
 enabled = false
 # Designer only: inspected text docs/native editable nodes. No captures/images/exports.

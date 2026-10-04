@@ -31,7 +31,7 @@ export class ExtractionError extends Error {
 }
 
 export async function extractInterview(image: { bytes: Uint8Array; mimeType: string }): Promise<DocumentFields> {
-  const key = process.env.GEMINI_API_KEY?.trim();
+  const key = process.env.GEMINI_TOKEN?.trim();
   if (!key) throw new ExtractionError("CONFIGURATION");
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 30_000);

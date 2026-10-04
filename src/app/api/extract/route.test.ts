@@ -17,7 +17,7 @@ function form(bytes: Uint8Array = jpeg, type = "image/jpeg") {
 }
 function request(value: FormData) { return new Request("http://localhost/api/extract", { method: "POST", body: value }); }
 beforeEach(() => {
-  vi.stubEnv("GEMINI_API_KEY", "synthetic-key"); vi.stubGlobal("fetch", fetchMock);
+  vi.stubEnv("GEMINI_API_KEY", undefined); vi.stubEnv("GEMINI_TOKEN", "synthetic-key"); vi.stubGlobal("fetch", fetchMock);
   fetchMock.mockResolvedValue(Response.json({ candidates: [{ finishReason: "STOP", content: { parts: [{ text: JSON.stringify(fields) }] } }] }));
 });
 afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals(); vi.resetAllMocks(); });
@@ -72,10 +72,14 @@ describe("single-image extraction route", () => {
   });
   it("returns sanitized configuration and upstream errors with no fields or logs", async () => {
     const log = vi.spyOn(console, "error").mockImplementation(() => {});
-    vi.stubEnv("GEMINI_API_KEY", "");
+    vi.stubEnv("GEMINI_TOKEN", "");
     const missing = await POST(request(form()));
     expect(missing.status).toBe(503); expect(fetchMock).not.toHaveBeenCalled();
-    vi.stubEnv("GEMINI_API_KEY", "synthetic-key");
+    expect(missing.headers.get("cache-control")).toBe("no-store");
+    expect(await missing.json()).toEqual({ error: {
+      code: "CONFIGURATION", message: "La extracción no está configurada. Contactá al responsable de la aplicación.",
+    } });
+    vi.stubEnv("GEMINI_TOKEN", "synthetic-key");
     fetchMock.mockRejectedValueOnce(new Error("private-key-image"));
     const failed = await POST(request(form()));
     expect(failed.status).toBe(502);

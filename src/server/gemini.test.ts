@@ -7,7 +7,7 @@ const fields = Object.fromEntries(DOCUMENT_FIELDS.map((key) => [key, null]));
 const image = { bytes: new Uint8Array([255, 216, 255]), mimeType: "image/jpeg" };
 const envelope = (value: unknown) => ({ candidates: [{ finishReason: "STOP", content: { parts: [{ text: JSON.stringify(value) }] } }] });
 const fetchMock = vi.fn();
-beforeEach(() => { vi.stubEnv("GEMINI_API_KEY", "synthetic-key"); vi.stubGlobal("fetch", fetchMock); });
+beforeEach(() => { vi.stubEnv("GEMINI_API_KEY", undefined); vi.stubEnv("GEMINI_TOKEN", "  synthetic-key  "); vi.stubGlobal("fetch", fetchMock); });
 afterEach(() => { vi.unstubAllEnvs(); vi.unstubAllGlobals(); vi.useRealTimers(); vi.clearAllMocks(); });
 
 describe("Gemini server adapter", () => {
@@ -26,8 +26,8 @@ describe("Gemini server adapter", () => {
     expect(body.generationConfig.responseJsonSchema.required).toEqual(DOCUMENT_FIELDS);
     expect(body.generationConfig.responseJsonSchema.additionalProperties).toBe(false);
   });
-  it("rejects missing configuration before sending an image", async () => {
-    vi.stubEnv("GEMINI_API_KEY", " ");
+  it.each([undefined, "", " \t\n "])("rejects missing or blank GEMINI_TOKEN %j before sending an image", async (token) => {
+    vi.stubEnv("GEMINI_TOKEN", token);
     await expect(extractInterview(image)).rejects.toMatchObject({ code: "CONFIGURATION", status: 503 });
     expect(fetchMock).not.toHaveBeenCalled();
   });

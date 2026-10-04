@@ -47,17 +47,28 @@ export default function ExtractionWorkspace() {
   const [fields, setFields] = useState<DocumentFields | null>(null);
   const [error, setError] = useState("");
   const [errorCode, setErrorCode] = useState("");
+  const [exportState, setExportState] = useState<"idle" | "preparing" | "success" | "error">("idle");
   const input = useRef<HTMLInputElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const version = useRef(0);
   const pending = useRef<AbortController | null>(null);
+  const exportOperation = useRef<object | null>(null);
+  const download = useRef<{ url: string; timer: number } | null>(null);
 
   useEffect(() => () => { if (selection) URL.revokeObjectURL(selection.url); }, [selection]);
-  useEffect(() => () => { version.current++; pending.current?.abort(); }, []);
+  useEffect(() => () => {
+    version.current++;
+    pending.current?.abort();
+    exportOperation.current = null;
+    releaseDownload();
+  }, []);
   useEffect(() => { if (stage === "review" || stage === "error") heading.current?.focus(); }, [stage]);
 
   function clearSelection() {
     version.current++;
+    exportOperation.current = null;
+    releaseDownload();
+    setExportState("idle");
     pending.current?.abort();
     pending.current = null;
     setSelection(null);
@@ -92,6 +103,45 @@ export default function ExtractionWorkspace() {
   function replaceImage() {
     clearSelection();
     input.current?.click();
+  }
+
+  function releaseDownload() {
+    if (!download.current) return;
+    window.clearTimeout(download.current.timer);
+    URL.revokeObjectURL(download.current.url);
+    download.current = null;
+  }
+
+  async function downloadExcel() {
+    if (stage !== "review" || !fields || exportOperation.current) return;
+    const current = version.current;
+    const operation = {};
+    const snapshot = { ...fields };
+    exportOperation.current = operation;
+    setExportState("preparing");
+    releaseDownload();
+    let url: string | null = null;
+    try {
+      const { createInterviewWorkbook } = await import("../lib/export-excel");
+      const bytes = await createInterviewWorkbook(snapshot);
+      if (current !== version.current || exportOperation.current !== operation) return;
+      url = URL.createObjectURL(new Blob([bytes], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }));
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = "entrevista.xlsx";
+      document.body.append(anchor);
+      try { anchor.click(); }
+      finally { anchor.remove(); }
+      // Allow the browser to consume the URL before releasing it.
+      download.current = { url, timer: window.setTimeout(releaseDownload, 1000) };
+      url = null;
+      setExportState("success");
+    } catch {
+      if (current === version.current && exportOperation.current === operation) setExportState("error");
+    } finally {
+      if (url) URL.revokeObjectURL(url);
+      if (exportOperation.current === operation) exportOperation.current = null;
+    }
   }
 
   async function processImage() {
@@ -130,7 +180,7 @@ export default function ExtractionWorkspace() {
     }
   }
 
-  const step = stage === "review" ? 3 : stage === "processing" ? 2 : 1;
+  const step = stage === "review" ? exportState === "success" ? 4 : 3 : stage === "processing" ? 2 : 1;
   const emptyCount = fields ? DOCUMENT_FIELDS.filter((key) => !fields[key]?.trim()).length : 0;
   const title = stage === "review" ? "Revisá antes de descargar" : stage === "processing" ? "Estamos leyendo la entrevista" :
     stage === "error" ? errorTitles[errorCode] ?? "El proveedor no respondió" : selection ? "Revisá la foto antes de procesarla." : "Pasá notas manuscritas a Excel.";
@@ -184,7 +234,7 @@ export default function ExtractionWorkspace() {
             <p>Puede tardar unos segundos. No cierres esta página ni reemplaces la imagen durante el proceso.</p>
             <p className="processing-status" role="status">Extrayendo los 9 campos acordados…</p>
             <button disabled aria-describedby="export-availability">Descargar Excel</button>
-            <p id="export-availability" className="small">Descarga disponible próximamente.</p>
+            <p id="export-availability" className="small">La descarga estará disponible después de revisar el resultado.</p>
           </section>
         ) : stage === "review" && fields ? (
           <section className="review-stage" aria-labelledby="workspace-title">
@@ -197,9 +247,13 @@ export default function ExtractionWorkspace() {
                 const blank = !fields[key]?.trim();
                 return <div className={`field ${blank ? "field-empty" : ""}`} key={key}>
                   <label htmlFor={`field-${key}`}>{fieldLabels[key]}</label>
-                  <input id={`field-${key}`} name={key} type="text" autoComplete="off" value={fields[key] ?? ""}
+                  <input id={`field-${key}`} name={key} type="text" autoComplete="off" value={fields[key] ?? ""} disabled={exportState === "preparing"}
                     placeholder={blank ? "Sin dato" : undefined} aria-describedby={blank ? `hint-${key}` : undefined}
-                    onChange={(event) => setFields({ ...fields, [key]: event.target.value })} />
+                    onChange={(event) => {
+                      if (exportOperation.current) return;
+                      setExportState("idle");
+                      setFields({ ...fields, [key]: event.target.value });
+                    }} />
                   {blank && <p id={`hint-${key}`} className="field-hint">Sin dato. Revisá este campo.</p>}
                 </div>;
               })}
@@ -207,9 +261,11 @@ export default function ExtractionWorkspace() {
             <p className="review-summary">La planilla tendrá 1 hoja, 9 columnas en este orden y 1 fila de entrevista. Los campos vacíos quedarán en blanco.</p>
             <div className="review-actions"><p className="small">Tus cambios permanecen solo en esta página.</p><div className="actions">
               <button className="secondary" onClick={replaceImage}>Reemplazar imagen</button>
-              <button disabled aria-describedby="export-availability">Descargar Excel</button>
+              <button disabled={exportState === "preparing"} onClick={downloadExcel}>{exportState === "preparing" ? "Preparando Excel…" : "Descargar Excel"}</button>
             </div></div>
-            <p id="export-availability" className="small">Descarga disponible próximamente.</p>
+            {exportState === "preparing" && <p className="small" role="status">Preparando la planilla con los valores revisados…</p>}
+            {exportState === "success" && <div className="export-confirmation" role="status"><h2>Descarga iniciada</h2><p>El navegador recibió la planilla. Revisá tus descargas; podés corregir los campos y descargar otra vez.</p></div>}
+            {exportState === "error" && <div className="error-panel" role="alert"><p>No pudimos preparar el Excel. Tus cambios siguen disponibles. Intentá descargar nuevamente.</p></div>}
           </section>
         ) : (
           <div className={selection ? "ready-layout" : "upload-layout"}>

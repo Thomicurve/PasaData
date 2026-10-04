@@ -139,4 +139,7 @@ figcaption span { color: var(--muted); flex-shrink: 0; font-size: 13px; }
   .review-actions { flex-direction: column-reverse; align-items: start; gap: 16px; }
   .small { font-size: 12px; }
 }
+.export-confirmation { background: var(--accent-soft); border: 1px solid var(--line); border-radius: 12px; padding: 20px; color: var(--accent); }
+.export-confirmation h2 { margin: 0 0 8px; font-size: 20px; }
+.export-confirmation p { margin: 0; line-height: 1.5; }
 @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }

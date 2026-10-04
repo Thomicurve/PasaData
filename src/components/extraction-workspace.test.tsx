@@ -8,6 +8,8 @@ import { DOCUMENT_FIELDS } from "../lib/document-fields";
 const sample = Object.fromEntries(DOCUMENT_FIELDS.map((key) => [key, null]));
 const labels = ["Nombre", "Apellido", "DNI", "Estado civil", "Domicilio", "Situación laboral", "Ingresos", "Motivo de solicitud", "Observaciones"];
 const fetchMock = vi.fn();
+const exportMock = vi.hoisted(() => vi.fn());
+vi.mock("../lib/export-excel", () => ({ createInterviewWorkbook: exportMock }));
 const revoke = vi.fn();
 let urlCount = 0;
 function file(name = "synthetic.jpg", type = "image/jpeg", size = 4) {
@@ -27,6 +29,7 @@ beforeEach(() => {
   Object.defineProperty(URL, "revokeObjectURL", { configurable: true, value: revoke });
   vi.stubGlobal("fetch", fetchMock);
   fetchMock.mockImplementation(() => Promise.resolve({ ok: true, json: async () => ({ fields: sample }) }));
+  exportMock.mockResolvedValue(new ArrayBuffer(4));
 });
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.restoreAllMocks(); vi.resetAllMocks(); });
 
@@ -62,7 +65,7 @@ describe("single interview workspace", () => {
     expect((screen.getByLabelText("DNI") as HTMLInputElement).value).toBe("00123456");
     expect(screen.getByText("8 campos vacíos")).toBeTruthy();
     expect(screen.getAllByText("Sin dato. Revisá este campo.")).toHaveLength(8);
-    expect((screen.getByRole("button", { name: "Descargar Excel" }) as HTMLButtonElement).disabled).toBe(true);
+    expect((screen.getByRole("button", { name: "Descargar Excel" }) as HTMLButtonElement).disabled).toBe(false);
     const [url, init] = fetchMock.mock.calls[0];
     expect(url).toBe("/api/extract"); expect(init.method).toBe("POST");
     expect([...init.body.keys()]).toEqual(["image", "processingAcknowledged"]);
@@ -186,5 +189,69 @@ describe("single interview workspace", () => {
     await act(async () => reject(new Error("private-old-failure")));
     expect(screen.queryByRole("alert")).toBeNull();
     expect(screen.getByText("new.jpg")).toBeTruthy();
+  });
+  it("downloads only reviewed current edits with a generic filename and cleans its anchor/URL", async () => {
+    const click = vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
+    render(<ExtractionWorkspace />); await select(); await submit(); await screen.findByLabelText("Nombre");
+    await userEvent.type(screen.getByLabelText("DNI"), "00123456");
+    await userEvent.type(screen.getByLabelText("Ingresos"), "$ 123,50");
+    await userEvent.click(screen.getByRole("button", { name: "Descargar Excel" }));
+    await screen.findByText("Descarga iniciada");
+    expect(exportMock).toHaveBeenCalledWith({ ...sample, dni: "00123456", ingresos: "$ 123,50" });
+    expect(click).toHaveBeenCalledTimes(1);
+    const anchor = click.mock.instances[0] as HTMLAnchorElement;
+    expect(anchor.download).toBe("entrevista.xlsx");
+    expect(anchor.href).toBe("blob:synthetic-2");
+    expect(anchor.isConnected).toBe(false);
+    cleanup();
+    expect(revoke).toHaveBeenCalledWith("blob:synthetic-2");
+  });
+  it("permits blank fields, prevents duplicate export and freezes edits while preparing", async () => {
+    let resolve!: (value: ArrayBuffer) => void;
+    exportMock.mockImplementationOnce(() => new Promise((done) => { resolve = done; }));
+    const click = vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
+    render(<ExtractionWorkspace />); await select(); await submit(); await screen.findByLabelText("Nombre");
+    await userEvent.dblClick(screen.getByRole("button", { name: "Descargar Excel" }));
+    await waitFor(() => expect(exportMock).toHaveBeenCalledTimes(1));
+    expect((screen.getByLabelText("Nombre") as HTMLInputElement).disabled).toBe(true);
+    expect((screen.getByRole("button", { name: "Preparando Excel…" }) as HTMLButtonElement).disabled).toBe(true);
+    await act(async () => resolve(new ArrayBuffer(4)));
+    await screen.findByText("Descarga iniciada");
+    expect(click).toHaveBeenCalledTimes(1);
+  });
+  it("preserves fields after sanitized export failure and permits retry", async () => {
+    exportMock.mockRejectedValueOnce(new Error("private-export-details"));
+    const click = vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
+    render(<ExtractionWorkspace />); await select(); await submit(); await screen.findByLabelText("Nombre");
+    await userEvent.type(screen.getByLabelText("Nombre"), "Synthetic edit");
+    await userEvent.click(screen.getByRole("button", { name: "Descargar Excel" }));
+    expect((await screen.findByRole("alert")).textContent).not.toContain("private-export-details");
+    expect((screen.getByLabelText("Nombre") as HTMLInputElement).value).toBe("Synthetic edit");
+    expect(click).not.toHaveBeenCalled();
+    await userEvent.click(screen.getByRole("button", { name: "Descargar Excel" }));
+    await screen.findByText("Descarga iniciada");
+    expect(click).toHaveBeenCalledTimes(1);
+  });
+  it("cleans the Blob URL and anchor when browser download initiation fails", async () => {
+    vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => { throw new Error("private-browser-error"); });
+    render(<ExtractionWorkspace />); await select(); await submit(); await screen.findByLabelText("Nombre");
+    await userEvent.click(screen.getByRole("button", { name: "Descargar Excel" }));
+    expect((await screen.findByRole("alert")).textContent).not.toContain("private-browser-error");
+    expect(revoke).toHaveBeenCalledWith("blob:synthetic-2");
+    expect(document.querySelector("a[download]")).toBeNull();
+    expect((screen.getByLabelText("Nombre") as HTMLInputElement).disabled).toBe(false);
+  });
+  it.each(["replace", "unmount"])("discards an in-flight workbook after %s", async (action) => {
+    let resolve!: (value: ArrayBuffer) => void;
+    exportMock.mockImplementationOnce(() => new Promise((done) => { resolve = done; }));
+    const click = vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
+    const view = render(<ExtractionWorkspace />); await select(); await submit(); await screen.findByLabelText("Nombre");
+    await userEvent.click(screen.getByRole("button", { name: "Descargar Excel" }));
+    await waitFor(() => expect(exportMock).toHaveBeenCalledTimes(1));
+    if (action === "replace") await userEvent.click(screen.getByRole("button", { name: "Reemplazar imagen" }));
+    else view.unmount();
+    await act(async () => resolve(new ArrayBuffer(4)));
+    expect(click).not.toHaveBeenCalled();
+    expect(URL.createObjectURL).toHaveBeenCalledTimes(1);
   });
 });

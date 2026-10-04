@@ -46,7 +46,7 @@ p { margin: 0; line-height: 1.5; }
 .file-input { display: none; }
 .upload-layout, .ready-layout { display: grid; align-items: center; gap: 56px; min-height: 660px; }
 .upload-layout { grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: 68px; }
-.ready-layout { grid-template-columns: minmax(0, 650px) minmax(0, 1fr); align-items: stretch; }
+.ready-layout { grid-template-columns: minmax(0, 650px) minmax(300px, 1fr); align-items: stretch; }
 .intro { display: flex; flex-direction: column; gap: 20px; justify-content: center; min-width: 0; }
 .kicker { font-size: 13px; color: var(--accent); font-weight: 700; }
 .description { font-size: 17px; color: var(--muted); }
@@ -70,6 +70,11 @@ figcaption span { color: var(--muted); flex-shrink: 0; font-size: 13px; }
 .actions { display: flex; gap: 12px; }
 .ready-layout .actions { flex-wrap: wrap; }
 .ready-layout .actions button { flex: 1; }
+.bot-verification { display: flex; flex-direction: column; gap: 9px; width: 100%; min-width: 0; }
+.bot-verification h2 { font-size: 15px; font-weight: 700; }
+.bot-verification p { font-size: 13px; line-height: 1.5; color: var(--muted); }
+.turnstile-widget { min-height: 65px; min-width: 300px; width: 100%; }
+.bot-verification button { align-self: start; }
 .processing-stage { min-height: 660px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; text-align: center; }
 .processing-stage h1 { font-size: 32px; }
 .processing-stage > p { max-width: 620px; color: var(--muted); }
@@ -118,7 +123,9 @@ figcaption span { color: var(--muted); flex-shrink: 0; font-size: 13px; }
   .ready-layout .preview-panel { order: 3; width: 100%; }
   .ready-layout .intro .error-panel { order: 2; }
   .ready-layout .intro .provider-notice { order: 4; }
-  .ready-layout .intro .actions { order: 5; width: 100%; }
+  .ready-layout .intro .bot-verification { order: 5; }
+  .ready-layout .intro .processing-availability { order: 6; }
+  .ready-layout .intro .actions { order: 7; width: 100%; }
   h1, .processing-stage h1, .review-heading h1 { font-size: 30px; line-height: 1.15; }
   .intro { gap: 18px; width: 100%; }
   .description { font-size: 15px; }
@@ -143,3 +150,4 @@ figcaption span { color: var(--muted); flex-shrink: 0; font-size: 13px; }
 .export-confirmation h2 { margin: 0 0 8px; font-size: 20px; }
 .export-confirmation p { margin: 0; line-height: 1.5; }
 @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+@media (max-width: 340px) { .workspace { padding-left: 10px; padding-right: 10px; } }

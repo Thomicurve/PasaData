@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { DOCUMENT_FIELDS, documentFieldsSchema, type DocumentFields, type DocumentField } from "../lib/document-fields";
+import TurnstileChallenge from "./turnstile-challenge";
 
 const fieldLabels: Record<DocumentField, string> = {
   nombre: "Nombre", apellido: "Apellido", dni: "DNI", estadoCivil: "Estado civil",
@@ -9,7 +10,12 @@ const fieldLabels: Record<DocumentField, string> = {
   motivoSolicitud: "Motivo de solicitud", observaciones: "Observaciones",
 };
 const errorMessages: Record<string, string> = {
-  CONFIGURATION: "El procesamiento no está disponible. Contactá al responsable de la aplicación.",
+  CONFIGURATION: "No podemos procesar imágenes en este momento. Tu foto sigue disponible. Volvé a intentarlo más tarde.",
+  EXTRACTION_DISABLED: "No podemos procesar imágenes en este momento. Tu foto sigue disponible. Volvé a intentarlo más tarde.",
+  PROTECTION_UNAVAILABLE: "No podemos procesar imágenes en este momento. Tu foto sigue disponible. Volvé a intentarlo más tarde.",
+  BOT_VERIFICATION: "No pudimos validar la verificación. Volvé a verificar para continuar.",
+  RATE_LIMITED: "Esperá antes de procesar otra imagen. Tu foto sigue disponible.",
+  DAILY_LIMIT: "La web alcanzó el máximo de 10 intentos de hoy. Tu foto sigue disponible.",
   PROVIDER_TIMEOUT: "El procesamiento tardó demasiado. Intentá nuevamente.",
   PROVIDER_FAILURE: "No pudimos procesar la imagen. Revisá tu conexión y reintentá en unos minutos.",
   INVALID_EXTRACTION: "La respuesta no tenía el formato esperado. Descartamos el resultado. Probá de nuevo con una fotografía clara.",
@@ -23,6 +29,11 @@ const errorTitles: Record<string, string> = {
   INVALID_EXTRACTION: "La respuesta no tenía el formato esperado",
   CONFIGURATION: "El procesamiento no está disponible",
   PROVIDER_TIMEOUT: "El procesamiento tardó demasiado",
+  BOT_VERIFICATION: "Volvé a verificar para continuar",
+  RATE_LIMITED: "Esperá antes de procesar otra imagen",
+  DAILY_LIMIT: "Se alcanzó el cupo diario",
+  EXTRACTION_DISABLED: "El procesamiento no está disponible",
+  PROTECTION_UNAVAILABLE: "El procesamiento no está disponible",
 };
 type Selection = { file: File; url: string; version: number };
 type Stage = "empty" | "ready" | "processing" | "review" | "error";
@@ -47,6 +58,10 @@ export default function ExtractionWorkspace() {
   const [fields, setFields] = useState<DocumentFields | null>(null);
   const [error, setError] = useState("");
   const [errorCode, setErrorCode] = useState("");
+  const [token, setToken] = useState<string | null>(null);
+  const tokenRef = useRef<{ value: string; expiresAt: number } | null>(null);
+  const [limit, setLimit] = useState<{ code: string; deadline: number } | null>(null);
+  const [remaining, setRemaining] = useState(0);
   const [exportState, setExportState] = useState<"idle" | "preparing" | "success" | "error">("idle");
   const input = useRef<HTMLInputElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -63,8 +78,18 @@ export default function ExtractionWorkspace() {
     releaseDownload();
   }, []);
   useEffect(() => { if (stage === "review" || stage === "error") heading.current?.focus(); }, [stage]);
+  useEffect(() => {
+    if (!limit) return;
+    const update = () => setRemaining(Math.max(0, Math.ceil((limit.deadline - Date.now()) / 1000)));
+    update();
+    const timer = window.setInterval(update, 1000);
+    return () => window.clearInterval(timer);
+  }, [limit]);
+
+  function acceptToken(value: string | null) { tokenRef.current = value ? { value, expiresAt: Date.now() + 300_000 } : null; setToken(value); }
 
   function clearSelection() {
+    acceptToken(null);
     version.current++;
     exportOperation.current = null;
     releaseDownload();
@@ -145,7 +170,10 @@ export default function ExtractionWorkspace() {
   }
 
   async function processImage() {
-    if (!selection || !decoded || !acknowledged || pending.current) return;
+    const verification = tokenRef.current;
+    if (!selection || !decoded || !acknowledged || !verification || pending.current || (limit && limit.deadline > Date.now()) || (stage !== "ready" && stage !== "error")) return;
+    if (verification.expiresAt <= Date.now()) { acceptToken(null); return; }
+    acceptToken(null);
     const current = selection.version;
     const controller = new AbortController();
     pending.current = controller;
@@ -155,6 +183,7 @@ export default function ExtractionWorkspace() {
     const body = new FormData();
     body.append("image", selection.file);
     body.append("processingAcknowledged", "true");
+    body.append("turnstileToken", verification.value);
     try {
       const response = await fetch("/api/extract", { method: "POST", body, signal: controller.signal, cache: "no-store" });
       let payload: unknown;
@@ -164,6 +193,18 @@ export default function ExtractionWorkspace() {
       if (!response.ok) {
         const code = payload && typeof payload === "object" && "error" in payload &&
           payload.error && typeof payload.error === "object" && "code" in payload.error ? payload.error.code : null;
+        if (code === "RATE_LIMITED" || code === "DAILY_LIMIT") {
+          const jsonDelay = payload && typeof payload === "object" && "error" in payload && payload.error &&
+            typeof payload.error === "object" && "retryAfter" in payload.error ? payload.error.retryAfter : null;
+          const header = response.headers?.get("Retry-After");
+          const headerDelay = header && /^\d+$/.test(header) ? Number(header) : null;
+          const delays = [jsonDelay, headerDelay].filter((value): value is number => typeof value === "number" && Number.isSafeInteger(value) && value > 0 && value <= 172800);
+          if (delays.length) {
+            const seconds = Math.max(...delays);
+            setLimit({ code, deadline: Date.now() + seconds * 1000 });
+            setRemaining(seconds);
+          }
+        }
         throw new Error(typeof code === "string" && Object.hasOwn(errorMessages, code) ? code : "PROVIDER_FAILURE");
       }
       setFields(parseFields(payload));
@@ -182,6 +223,11 @@ export default function ExtractionWorkspace() {
 
   const step = stage === "review" ? exportState === "success" ? 4 : 3 : stage === "processing" ? 2 : 1;
   const emptyCount = fields ? DOCUMENT_FIELDS.filter((key) => !fields[key]?.trim()).length : 0;
+  const waiting = remaining > 0 && limit !== null;
+  const availability = waiting ? limit.code === "RATE_LIMITED" ?
+    `Podés procesar otra imagen en ${remaining} segundos. Tu foto sigue disponible.` :
+    `La web alcanzó el máximo de 10 intentos de hoy. Podés volver a procesar el ${new Intl.DateTimeFormat("es-AR", { timeZone: "America/Argentina/Buenos_Aires", dateStyle: "short", timeStyle: "short" }).format(limit.deadline)}, hora de Buenos Aires.` :
+    "Para procesar, elegí una imagen válida, confirmá el aviso y completá la verificación.";
   const title = stage === "review" ? "Revisá antes de descargar" : stage === "processing" ? "Estamos leyendo la entrevista" :
     stage === "error" ? errorTitles[errorCode] ?? "El proveedor no respondió" : selection ? "Revisá la foto antes de procesarla." : "Pasá notas manuscritas a Excel.";
 
@@ -280,7 +326,9 @@ export default function ExtractionWorkspace() {
                   <p>La imagen con datos personales se enviará a Google para extraerlos. La app no guarda la imagen, los datos ni el historial. La retención del proveedor debe verificarse antes de producción.</p>
                   <label className="acknowledgement"><input type="checkbox" checked={acknowledged} onChange={(event) => setAcknowledged(event.target.checked)} />Entiendo que la imagen se enviará a Google.</label>
                 </div>
-                <div className="actions"><button disabled={!decoded || !acknowledged} onClick={processImage}>{stage === "error" ? "Reintentar procesamiento" : "Procesar imagen"}</button>
+                <TurnstileChallenge key={selection.version} onToken={acceptToken} />
+                <p id="processing-availability" className="small processing-availability">{availability}</p>
+                <div className="actions"><button disabled={!decoded || !acknowledged || !token || waiting} aria-describedby="verification-status processing-availability" onClick={processImage}>{stage === "error" ? "Reintentar procesamiento" : "Procesar imagen"}</button>
                   <button className="secondary" onClick={replaceImage}>Reemplazar imagen</button></div>
               </> : <p className="privacy-summary">La app no guarda la imagen ni los datos.</p>}
             </section>

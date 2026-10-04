@@ -1,8 +1,8 @@
 # PasaData
 
-This checkout contains the Next.js foundation, fixed Zod contract and TASK-002 server extraction endpoint. The current page is a temporary placeholder. Browser image selection, review controls and Excel export are not implemented yet.
+This checkout contains the Next.js foundation, fixed Zod contract, server extraction endpoint and single-image review workspace. Excel download is displayed as unavailable until the export implementation is added.
 
-Use Node.js 22.12 or newer and npm:
+Use Node.js 22.22.2+, 24.15.0+ (within their respective major versions), or 26+ and npm. The DOM test runner requires these versions:
 
 ```sh
 npm ci
@@ -31,3 +31,7 @@ Success is HTTP 200 with `{ "fields": { ... } }`, containing the nine ordered ke
 Provider documentation checked on 2026-10-03: [stable model and supported inputs](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash), [generateContent REST API](https://ai.google.dev/api/generate-content), [inline image limits](https://ai.google.dev/gemini-api/docs/image-understanding), [structured outputs](https://ai.google.dev/gemini-api/docs/structured-output), and [data-use terms](https://ai.google.dev/gemini-api/terms). Google's unpaid services must not receive sensitive, confidential or personal information. Paid-service terms exclude prompts/responses from product improvement but permit limited safety logging. No zero-retention promise is made. Tests use synthetic in-memory byte arrays and mocked fetch only; no real interview or provider call has been verified.
 
 Before processing real personal data or deploying, verify the actual project's active paid billing and applicable terms, retention, processing region, permissions, quotas, model availability and Vercel limits. The unauthenticated paid endpoint still needs deployment-level abuse/cost controls; the acknowledgement and per-request size bounds do not provide these controls. This task does not authorize publication or a live-provider test.
+
+In the browser, choose or drop one JPEG/PNG up to 3,000,000 bytes, check the local preview and acknowledge the Google processing notice before selecting **Procesar imagen**. Successful processing opens nine editable, labeled text fields. Empty values remain blank with a text indicator and live count. Replacing the image or submitting an invalid replacement clears previous values; replacement/unmount aborts pending fetch and late responses are ignored. Object URLs are revoked when discarded. Values live only in component memory; no local/session storage is used. Server validation remains authoritative.
+
+The responsive composition follows the approved `PasaDataDesign.pen` app frames: desktop upload/preview columns, three review columns and single-column mobile controls. Instrument Sans is bundled through Fontsource and served by the app; no remote font request is needed. DOM tests run in jsdom using Testing Library, synthetic in-memory files, simulated decode events and mocked fetch. They verify user interactions and race guards, not real image decoding, rendering dimensions or handwriting accuracy. No screenshots or design exports are produced.

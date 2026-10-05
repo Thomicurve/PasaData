@@ -50,7 +50,7 @@ function parseFields(payload: unknown): DocumentFields {
   return documentFieldsSchema.parse(fields);
 }
 
-export default function ExtractionWorkspace() {
+export default function ExtractionWorkspace({ localBypass = false }: { localBypass?: boolean }) {
   const [stage, setStage] = useState<Stage>("empty");
   const [selection, setSelection] = useState<Selection | null>(null);
   const [decoded, setDecoded] = useState(false);
@@ -171,8 +171,8 @@ export default function ExtractionWorkspace() {
 
   async function processImage() {
     const verification = tokenRef.current;
-    if (!selection || !decoded || !acknowledged || !verification || pending.current || (limit && limit.deadline > Date.now()) || (stage !== "ready" && stage !== "error")) return;
-    if (verification.expiresAt <= Date.now()) { acceptToken(null); return; }
+    if (!selection || !decoded || !acknowledged || (!localBypass && !verification) || pending.current || (limit && limit.deadline > Date.now()) || (stage !== "ready" && stage !== "error")) return;
+    if (!localBypass && verification && verification.expiresAt <= Date.now()) { acceptToken(null); return; }
     acceptToken(null);
     const current = selection.version;
     const controller = new AbortController();
@@ -183,7 +183,7 @@ export default function ExtractionWorkspace() {
     const body = new FormData();
     body.append("image", selection.file);
     body.append("processingAcknowledged", "true");
-    body.append("turnstileToken", verification.value);
+    if (!localBypass && verification) body.append("turnstileToken", verification.value);
     try {
       const response = await fetch("/api/extract", { method: "POST", body, signal: controller.signal, cache: "no-store" });
       let payload: unknown;
@@ -227,7 +227,8 @@ export default function ExtractionWorkspace() {
   const availability = waiting ? limit.code === "RATE_LIMITED" ?
     `Podés procesar otra imagen en ${remaining} segundos. Tu foto sigue disponible.` :
     `La web alcanzó el máximo de 10 intentos de hoy. Podés volver a procesar el ${new Intl.DateTimeFormat("es-AR", { timeZone: "America/Argentina/Buenos_Aires", dateStyle: "short", timeStyle: "short" }).format(limit.deadline)}, hora de Buenos Aires.` :
-    "Para procesar, elegí una imagen válida, confirmá el aviso y completá la verificación.";
+    localBypass ? "Modo de desarrollo local: sin verificación ni límites de intentos. Confirmá el aviso; procesar consume cuota de Gemini." :
+      "Para procesar, elegí una imagen válida, confirmá el aviso y completá la verificación.";
   const title = stage === "review" ? "Revisá antes de descargar" : stage === "processing" ? "Estamos leyendo la entrevista" :
     stage === "error" ? errorTitles[errorCode] ?? "El proveedor no respondió" : selection ? "Revisá la foto antes de procesarla." : "Pasá notas manuscritas a Excel.";
 
@@ -326,9 +327,9 @@ export default function ExtractionWorkspace() {
                   <p>La imagen con datos personales se enviará a Google para extraerlos. La app no guarda la imagen, los datos ni el historial. La retención del proveedor debe verificarse antes de producción.</p>
                   <label className="acknowledgement"><input type="checkbox" checked={acknowledged} onChange={(event) => setAcknowledged(event.target.checked)} />Entiendo que la imagen se enviará a Google.</label>
                 </div>
-                <TurnstileChallenge key={selection.version} onToken={acceptToken} />
+                {!localBypass && <TurnstileChallenge key={selection.version} onToken={acceptToken} />}
                 <p id="processing-availability" className="small processing-availability">{availability}</p>
-                <div className="actions"><button disabled={!decoded || !acknowledged || !token || waiting} aria-describedby="verification-status processing-availability" onClick={processImage}>{stage === "error" ? "Reintentar procesamiento" : "Procesar imagen"}</button>
+                <div className="actions"><button disabled={!decoded || !acknowledged || (!localBypass && !token) || waiting} aria-describedby={localBypass ? "processing-availability" : "verification-status processing-availability"} onClick={processImage}>{stage === "error" ? "Reintentar procesamiento" : "Procesar imagen"}</button>
                   <button className="secondary" onClick={replaceImage}>Reemplazar imagen</button></div>
               </> : <p className="privacy-summary">La app no guarda la imagen ni los datos.</p>}
             </section>

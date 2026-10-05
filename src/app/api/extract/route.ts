@@ -30,20 +30,20 @@ async function readForm(request: Request): Promise<FormData> {
 
 export async function POST(request: Request) {
   try {
-    const config = protectionConfig();
+    const config = protectionConfig(request);
     const form = await readForm(request);
     if ([...form.keys()].some((key) => !["image", "processingAcknowledged", "turnstileToken"].includes(key)) ||
       form.getAll("image").length !== 1 || form.getAll("processingAcknowledged").length !== 1 ||
       form.get("processingAcknowledged") !== "true") throw new ExtractionError("INVALID_REQUEST");
     const token = form.get("turnstileToken");
-    if (form.getAll("turnstileToken").length !== 1 || typeof token !== "string" || !token || token.length > 2048 || token.trim() !== token) throw new ExtractionError("BOT_VERIFICATION");
+    if (config && (form.getAll("turnstileToken").length !== 1 || typeof token !== "string" || !token || token.length > 2048 || token.trim() !== token)) throw new ExtractionError("BOT_VERIFICATION");
     const image = form.get("image");
     if (!(image instanceof File) || image.size === 0 || !["image/jpeg", "image/png"].includes(image.type)) throw new ExtractionError("INVALID_IMAGE");
     if (image.size > MAX_IMAGE_BYTES) throw new ExtractionError("TOO_LARGE");
     const bytes = new Uint8Array(await image.arrayBuffer());
     const signature = image.type === "image/jpeg" ? [255, 216, 255] : [137, 80, 78, 71, 13, 10, 26, 10];
     if (!signature.every((value, index) => bytes[index] === value)) throw new ExtractionError("INVALID_IMAGE");
-    await protectExtraction(request, token, config);
+    if (config) await protectExtraction(request, token as string, config);
     if (request.signal.aborted) throw new ExtractionError("PROTECTION_UNAVAILABLE");
     const fields = await extractInterview({ bytes, mimeType: image.type });
     return Response.json({ fields }, { headers: responseHeaders });

@@ -38,6 +38,20 @@ The responsive composition follows the approved `PasaDataDesign.pen` app frames:
 
 Select **Descargar Excel** after reviewing the values. ExcelJS 4.4.0 loads only when exporting and prepares entrevista.xlsx locally with one Entrevista worksheet, the nine ordered contract headers and one interview row. Blank/whitespace values stay blank; DNI, income formatting and formula-like input remain literal text. Fields freeze during preparation; replacing the image or leaving the page discards late export results. Export failures keep reviewed edits and permit retry. The download confirmation means the browser received a download request, not that a file was saved. Temporary anchors and Blob URLs are cleaned up. Serialization tests load the generated workbook in memory; mocked DOM tests cannot verify a real browser download or Excel application compatibility.
 
+## Development on localhost
+
+To work locally without Cloudflare verification or Redis attempt limits, explicitly set these server-only values in your ignored `.env.local` and restart `npm run dev`:
+
+```text
+LOCAL_EXTRACTION_BYPASS=true
+EXTRACTION_ENABLED=true
+GEMINI_TOKEN=<Google server API key>
+```
+
+`npm run dev` binds only to `127.0.0.1`. Open `http://127.0.0.1:3000` (or `http://localhost:3000`). The exception requires `NODE_ENV=development`, absent `VERCEL` and `VERCEL_ENV`, and an exact loopback request hostname (`localhost`, `127.0.0.1`, or IPv6 `::1`). Do not impersonate Vercel locally or expose this development process through tunnels/proxies: hostname checks do not establish TCP origin. Page and API independently evaluate the mode; the server never trusts the client's mode, Origin or forwarded host headers.
+
+In this mode the widget/token, Cloudflare validation and Redis IP/daily controls are omitted. Consent, image/multipart bounds, signatures, kill switch, Gemini configuration, deadlines, sanitized output, no-store, review and export remain enforced. Local calls still reach Gemini and consume its quota, without the Redis counter. No Cloudflare/Redis credentials or public site key are needed for this mode. Remove `LOCAL_EXTRACTION_BYPASS` to disable it. Production, previews, Vercel and `next build`/`next start` keep protection mandatory even if the flag is accidentally enabled. Never use a public environment variable for this flag or credentials.
+
 ## Gemini consumption protection
 
 Extraction is disabled unless `EXTRACTION_ENABLED=true` and every protection setting is valid. The server checks configuration, bounded image input, Turnstile, and an atomic Redis reservation before its single Google request. Turnstile must return `success=true`, an allowed hostname and the exact action `extract`. Tokens are single-use: missing, duplicate, expired or replayed tokens cannot authorize another call. The image is never sent to Cloudflare. Transport errors, redirects, responses above 8192 bytes, five-second protection deadlines and ambiguous Redis replies block extraction. There are no automatic retries or refunds, including when Google fails, times out, or the visitor disconnects after reservation.
@@ -55,7 +69,7 @@ EXTRACTION_NAMESPACE=<stable production namespace, letters/numbers/underscore/hy
 EXTRACTION_IP_HMAC_SECRET=<random server secret, at least 32 characters>
 ```
 
-Vercel supplies `VERCEL=1` and `VERCEL_ENV=production`, `preview` or `development`; do not manually impersonate this environment on a server exposed directly to clients. The route trusts only Vercel's overwritten `x-vercel-forwarded-for` header containing a single valid IP. Confirm this proxy model in the actual deployment, including any proxy before Vercel. Arbitrary `x-forwarded-for`, request bodies and missing/ambiguous IPs never authorize extraction. Local tests use synthetic Vercel metadata; there is no production bypass for local development.
+Vercel supplies `VERCEL=1` and `VERCEL_ENV=production`, `preview` or `development`; do not manually impersonate this environment on a server exposed directly to clients. The protected route trusts only Vercel's overwritten `x-vercel-forwarded-for` header containing a single valid IP. Confirm this proxy model in the actual deployment, including any proxy before Vercel. Arbitrary `x-forwarded-for`, request bodies and missing/ambiguous IPs never authorize protected extraction. Local tests use synthetic Vercel metadata; the explicit development exception above never applies to production.
 
 The fixed global budget is **10 reserved attempts per calendar day in Buenos Aires (UTC−03:00)** for the entire application, with one reservation per IP every 60 seconds. Rotating IP or deploying another instance does not reset the global budget. Redis evaluates both limits in one Lua script immediately before Google. It checks its own clock against the application's daily window and rejects stale windows and corrupt values/types/expirations before writing. The daily key expires 48 hours after its day closes; IP HMAC keys expire after 60 seconds. Redis holds only these counts and HMAC identifiers, never clear IPs, images, extracted values or challenge tokens. Images and extracted data retain the privacy behavior described above.
 

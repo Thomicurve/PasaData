@@ -141,3 +141,63 @@ it("does not refund or retry reservation after Google failure", async () => {
     expect.stringContaining("generativelanguage.googleapis.com"),
   ]);
 });
+
+describe("explicit local extraction", () => {
+  beforeEach(() => {
+    vi.stubEnv("LOCAL_EXTRACTION_BYPASS", "true"); vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("VERCEL", undefined); vi.stubEnv("VERCEL_ENV", undefined);
+    for (const key of ["TURNSTILE_SECRET_KEY", "TURNSTILE_HOSTNAMES", "UPSTASH_REDIS_REST_URL", "UPSTASH_REDIS_REST_TOKEN", "EXTRACTION_NAMESPACE", "EXTRACTION_IP_HMAC_SECRET"]) vi.stubEnv(key, undefined);
+  });
+  it.each(["localhost", "127.0.0.1", "[::1]"])("extracts without token or protection credentials at %s", async (host) => {
+    const value = form(); value.delete("turnstileToken");
+    const response = await POST(new Request(`http://${host}:3000/api/extract`, { method: "POST", body: value }));
+    expect(response.status).toBe(200); expect(await response.json()).toEqual({ fields });
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(httpMock).toHaveBeenCalledTimes(1); expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(String(httpMock.mock.calls[0][0])).toContain("generativelanguage.googleapis.com");
+  });
+  it.each(["disabled", "key", "newlineKey", "consent", "signature", "size", "aborted"])("retains the local %s barrier", async (barrier) => {
+    const value = form(); value.delete("turnstileToken");
+    if (barrier === "disabled") vi.stubEnv("EXTRACTION_ENABLED", "false");
+    if (barrier === "key") vi.stubEnv("GEMINI_TOKEN", " ");
+    if (barrier === "newlineKey") vi.stubEnv("GEMINI_TOKEN", "synthetic\nkey");
+    if (barrier === "consent") value.delete("processingAcknowledged");
+    if (barrier === "signature") value.set("image", new Blob(["invalid"], { type: "image/jpeg" }), "synthetic");
+    if (barrier === "size") value.set("image", new Blob([new Uint8Array(MAX_IMAGE_BYTES + 1)], { type: "image/jpeg" }), "synthetic");
+    const controller = new AbortController(); if (barrier === "aborted") controller.abort();
+    const response = await POST(new Request("http://localhost:3000/api/extract", { method: "POST", body: value, signal: controller.signal }));
+    expect(response.status).toBe(barrier === "size" ? 413 : ["consent", "signature"].includes(barrier) ? 400 : 503);
+    expect(httpMock).not.toHaveBeenCalled();
+  });
+  it.each(["production", "preview", "vercel", "remote", "falseSuffix", "flagAbsent", "forwarded"])("does not bypass for %s even when the client omits verification", async (variant) => {
+    if (variant === "production") vi.stubEnv("NODE_ENV", "production");
+    if (variant === "preview") vi.stubEnv("VERCEL_ENV", "preview");
+    if (variant === "vercel") vi.stubEnv("VERCEL", "1");
+    if (variant === "flagAbsent") vi.stubEnv("LOCAL_EXTRACTION_BYPASS", undefined);
+    const host = variant === "falseSuffix" ? "localhost.evil.test" : ["remote", "forwarded"].includes(variant) ? "app.example.test" : "localhost";
+    const value = form(); value.delete("turnstileToken");
+    const response = await POST(new Request(`http://${host}/api/extract`, { method: "POST", body: value, headers: { "origin": "http://localhost", "x-forwarded-host": "localhost" } }));
+    expect(response.status).toBe(503); expect(await response.json()).toMatchObject({ error: { code: "CONFIGURATION" } });
+    expect(httpMock).not.toHaveBeenCalled();
+  });
+  it("rejects a remote direct Host even when the server normalizes the URL to loopback", async () => {
+    const value = form(); value.delete("turnstileToken");
+    const response = await POST(new Request("http://127.0.0.1:3000/api/extract", { method: "POST", body: value, headers: { host: "app.example.test", "x-forwarded-host": "localhost" } }));
+    expect(response.status).toBe(503); expect(httpMock).not.toHaveBeenCalled();
+  });
+});
+
+it("preserves Cloudflare and Redis in production with the local flag accidentally enabled", async () => {
+  vi.stubEnv("LOCAL_EXTRACTION_BYPASS", "true"); vi.stubEnv("NODE_ENV", "production");
+  expect((await POST(request(form()))).status).toBe(200);
+  expect(httpMock.mock.calls.map(([url]) => String(url))).toEqual([
+    "https://challenges.cloudflare.com/turnstile/v0/siteverify", "https://synthetic.upstash.io", expect.stringContaining("generativelanguage.googleapis.com"),
+  ]);
+});
+it("still requires a token in production on loopback with flag=true", async () => {
+  vi.stubEnv("LOCAL_EXTRACTION_BYPASS", "true"); vi.stubEnv("NODE_ENV", "production");
+  const value = form(); value.delete("turnstileToken");
+  const response = await POST(request(value));
+  expect(response.status).toBe(400); expect(await response.json()).toMatchObject({ error: { code: "BOT_VERIFICATION" } });
+  expect(httpMock).not.toHaveBeenCalled();
+});

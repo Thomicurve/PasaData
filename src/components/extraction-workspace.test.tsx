@@ -38,6 +38,22 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.restoreAllMocks(); vi.resetAllMocks(); vi.useRealTimers(); });
 
 describe("single interview workspace", () => {
+  it("omits verification only in server-selected local mode and keeps consent, review and export", async () => {
+    const click = vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
+    render(<ExtractionWorkspace localBypass />);
+    fireEvent.change(screen.getByLabelText("Imagen de la entrevista"), { target: { files: [file()] } });
+    fireEvent.load(await screen.findByAltText("Vista previa de la entrevista seleccionada"));
+    expect(screen.queryByRole("button", { name: "Verificar prueba" })).toBeNull();
+    const process = screen.getByRole("button", { name: "Procesar imagen" }) as HTMLButtonElement;
+    expect(process.disabled).toBe(true);
+    expect(process.getAttribute("aria-describedby")).toBe("processing-availability");
+    expect(screen.getByText(/desarrollo local/)).toBeTruthy();
+    await submit(); await screen.findByLabelText("Nombre");
+    const body = fetchMock.mock.calls[0][1].body as FormData;
+    expect(body.has("turnstileToken")).toBe(false); expect(body.get("processingAcknowledged")).toBe("true");
+    await userEvent.click(screen.getByRole("button", { name: "Descargar Excel" }));
+    await screen.findByText("Descarga iniciada"); expect(click).toHaveBeenCalledTimes(1);
+  });
   it("blocks an expired token at the handler even before delayed browser timers fire", async () => {
     render(<ExtractionWorkspace />); await select();
     vi.spyOn(Date, "now").mockReturnValue(Date.now() + 300_001);

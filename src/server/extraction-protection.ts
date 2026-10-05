@@ -3,22 +3,28 @@ import { createHmac } from "node:crypto";
 import { isIP } from "node:net";
 import { Buffer } from "node:buffer";
 import { ExtractionError } from "./gemini";
+import { localExtractionBypass } from "./local-development";
 
 const DAY_MS = 86_400_000;
 const TIMEOUT_MS = 5000;
 const MAX_RESPONSE_BYTES = 8192;
 type ProtectionConfig = { secret: string; hostnames: string[]; redisUrl: string; redisToken: string; namespace: string; hmacSecret: string };
 
-export function protectionConfig(): ProtectionConfig {
+export function protectionConfig(): ProtectionConfig;
+export function protectionConfig(request: Request): ProtectionConfig | null;
+export function protectionConfig(request?: Request): ProtectionConfig | null {
   if (process.env.EXTRACTION_ENABLED !== "true") throw new ExtractionError("EXTRACTION_DISABLED");
-  if (process.env.VERCEL !== "1" || !["production", "preview", "development"].includes(process.env.VERCEL_ENV ?? "") ||
-    (process.env.VERCEL_ENV === "preview" && process.env.EXTRACTION_PREVIEW_ENABLED !== "true")) throw new ExtractionError("CONFIGURATION");
   const required = (name: string) => {
     const value = process.env[name]?.trim();
     if (!value || /[\r\n]/.test(value)) throw new ExtractionError("CONFIGURATION");
     return value;
   };
   required("GEMINI_TOKEN");
+  // Next may normalize its URL to the bound hostname. Check the direct Host too, never a forwarded host.
+  if (request && localExtractionBypass(new URL(request.url).host) &&
+    localExtractionBypass(request.headers.get("host") ?? new URL(request.url).host)) return null;
+  if (process.env.VERCEL !== "1" || !["production", "preview", "development"].includes(process.env.VERCEL_ENV ?? "") ||
+    (process.env.VERCEL_ENV === "preview" && process.env.EXTRACTION_PREVIEW_ENABLED !== "true")) throw new ExtractionError("CONFIGURATION");
   const secret = required("TURNSTILE_SECRET_KEY");
   const hostnames = required("TURNSTILE_HOSTNAMES").split(",").map((hostname) => hostname.trim());
   if (hostnames.some((hostname) => hostname.length > 253 || !hostname.split(".").every((label) => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label)))) throw new ExtractionError("CONFIGURATION");
